@@ -8,12 +8,13 @@
    .alert {
      color: rgb(141, 3, 3); text-align: right;
    }
+  
 </style>
 <template>
   <Page>
     <ActionBar title="" style="height: 0;">
     </ActionBar>
-    <FlexboxLayout justifyContent="flex-end" flexDirection="column"
+    <FlexboxLayout justifyContent="center" flexDirection="column"
       class="bg"
     >
         <StackLayout orientation="" :hidden="hidden">
@@ -25,7 +26,8 @@
           <!--  -->
           <TextField hint="Password" 
             autocorrect="true" secure="true" 
-            v-model="inputText.password" />
+            v-model="inputText.password"
+            returnKeyType="go" />
           <Label :text="alert.password" v-if="alert.password.length > 0" class="alert" textWrap="true" />
           <!--  -->
           <Button text="Go" @tap="loginHandle"
@@ -33,7 +35,7 @@
           />
           
         </StackLayout>
-      <ActivityIndicator width="100" height="100" class="busy" :busy="hidden" />
+      <ActivityIndicator ref="load" width="100" height="100" class="busy" :busy="hidden" />
     </FlexboxLayout>
   </Page>
 </template>
@@ -58,7 +60,7 @@ export default {
       loginHandle: methods.loginHandle,
     },
     mounted() {
-        
+       
     }
 }
 </script>
