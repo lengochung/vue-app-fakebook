@@ -13,7 +13,6 @@ TNSFontIcon.paths = { fa: './assets/css/fontawesome.min.css', far: './assets/css
 TNSFontIcon.loadCss() 
 Vue.filter('fonticon', fonticon) 
 
-
 // Prints Vue logs when --env.production is *NOT* set while building
 
 // Vue.config.silent = (TNS_ENV === 'production')
