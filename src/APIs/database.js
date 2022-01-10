@@ -35,7 +35,6 @@ class Database {
     //         return []
     //     })
     XmlHResquest = async target => getJSON(config.PATH_API + target)
-                                        .then(rs => rs.result)
  
 }
 

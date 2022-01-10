@@ -38,10 +38,11 @@ export default {
         ActionChild
     },
     computed: {
-        ...mapGetters(["user"])
+        ...mapGetters(["user", "posts"])
     },
     methods: {
         back() {
+            console.log(this.posts);
             this.$navigateBack({
                     transition: {
                         name: "slideRight", duration: 300, curve: "easeIn" 

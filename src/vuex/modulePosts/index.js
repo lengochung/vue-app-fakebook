@@ -1,5 +1,5 @@
 import DB from "../../APIs"
-import helper from "../../helpers/vuex";
+import helper from "../../helpers";
 
 const modulePosts = {
     state: {
@@ -16,25 +16,18 @@ const modulePosts = {
     actions: {
         getPosts ({ commit, getters }) {
             DB.load("posts").ast_post().then(rs => {
-                let posts = rs.posts
-                const likes = rs.likes
-                const comments = rs.comments
-                // sort and sync data
-                posts.forEach(post => {
-                    post.date = helper.formatDate(post.date)
-                    post.likes = likes.filter(like => like.pid === post.pid)
-                    post.textLike = helper.formatInfoTextLike(getters.user, post.likes)
-                    post.comments = comments.filter(cmt => cmt.pid === post.pid)
-                    post.likeBoolean = post.likes.some(like => like.uid === getters.user.uid) ? true : false
-                })
-                // call mutations set posts
-                commit("setPosts", posts) 
+                if(rs.status) {
+                    let posts = rs.result.posts
+                    // sort and sync data 
+                    posts = helper.posts.formatPosts(posts, getters.user, rs.result.likes, rs.result.comments)
+                    // call mutations set posts
+                    commit("setPosts", posts) 
+                } else
+                    return Promise.reject()
             }).catch((err) => {
-                commit("setPosts", [{
-                    content: "Failed"
-                }])
-            });
-        }
+                commit("setPosts", getters.posts)
+            }); 
+        },
     }
 }
 

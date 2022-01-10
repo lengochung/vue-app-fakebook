@@ -10,7 +10,13 @@ const tables = {
             this.none(sql)
         }
     },
-    likes: class extends Query { table = "likes" },
+    likes: class extends Query { 
+        table = "likes"
+        insert(uid, pid) {
+            let sql = `insert into ${this.table} values(null, '${uid}', '${pid}')`
+            this.none(sql)
+        } 
+    },
     comments: class extends Query { 
         table = "comments";
         insert (uid, pid, comment) {

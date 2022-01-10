@@ -85,9 +85,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+
 import DB from '../APIs'
-import helper from "../helpers/vuex"
+import helper from "../helpers"
 export default {
     props: ["post", "user"],
     computed: {
@@ -98,20 +98,20 @@ export default {
     }),
     methods: {
       likeHandle() {
-        let a = []
-        a.push(2)
-        console.log(a);
-        if(this.post.likeBoolean)
+
+        if(this.post.likeBoolean){
+          helper.likes.dislike(this.user, this.post)
           this.post.likes = this.post.likes.filter(like => like.uid !== this.user.uid)
-        else
+        } else {
+          helper.likes.like(this.user, this.post)
           this.post.likes = [...this.post.likes, this.user]
+        }
 
         this.post.likeBoolean = !this.post.likeBoolean
 
-        this.post.textLike = helper.formatInfoTextLike(this.user, this.post.likes)
+        this.post.textLike = helper.posts.formatInfoTextLike(this.user, this.post.likes)
       
-      },
-      ...mapActions(["updateLike"])
+      }
     },
 }
 </script>

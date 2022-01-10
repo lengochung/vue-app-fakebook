@@ -12,14 +12,14 @@ const methods = {
         DB.load("users").getAll().then(rs => {
             this.alert = { user: "", password: ""};
             // Xác minh user
-            if(rs.some(user => user.username === this.inputText.user)) {
+            if(rs.result.some(user => user.username === this.inputText.user)) {
                 // Xác minh mật khẩu
-                if(rs.some(user => user.username === this.inputText.user && user.password === this.inputText.password)) {
+                if(rs.result.some(user => user.username === this.inputText.user && user.password === this.inputText.password)) {
                     
                     // Đăng nhập thành công
-                    let newUser = rs.find(user => user.username === this.inputText.user && user.password === this.inputText.password)
+                    let newUser = rs.result.find(user => user.username === this.inputText.user && user.password === this.inputText.password)
 
-                    this.setLogin( newUser )
+                    this.setLogin( newUser ) 
                     // 
                     DB.load("users").updateWhere('status', 1, 'uid', newUser.uid)
                         .then(rs => {

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 import Post from "./Post.vue"
 import PostDetail from "./PostDetail.vue"
@@ -54,9 +54,9 @@ export default {
 
     }),
     mounted() { 
-        // setInterval(() => {
-        //     this.$store.dispatch("getPosts")
-        // }, 1000);
+        setInterval(() => {
+            this.$store.dispatch("getPosts")
+        }, 3000);
     }
 }
 </script>

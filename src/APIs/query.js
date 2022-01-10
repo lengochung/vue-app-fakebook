@@ -27,7 +27,7 @@ class Query extends Database {
         return this.none(sql);
     }
     deleteDlWhere(col1, value1, col2, value2){ // hàm này delete có 1 điều kiện và không trả về giá trị
-        let sql = `DELETE FROM ${this.table} WHERE ${col1} = ${value1} and ${col2} = ${value2}`;
+        let sql = `DELETE FROM ${this.table} WHERE ${col1} = '${value1}' and ${col2} = '${value2}'`;
         return this.none(sql);
     }
     updateWhere(set, valueSet, col, value) {

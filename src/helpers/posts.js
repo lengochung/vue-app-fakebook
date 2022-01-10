@@ -1,6 +1,6 @@
 import { time } from "@nativescript/core/profiling"
 
-const helper = {
+const posts = {
     formatDate: dateString => {
         let date = new Date(dateString).getTime()
         let different = time() - date
@@ -30,7 +30,17 @@ const helper = {
             else
                 return likes[0].uname + " và " + (likes.length - 1) + " người khác"
         }
+    },
+    formatPosts (posts, user, likes, comments) {
+        posts.forEach(post => {        
+            post.date = this.formatDate(post.date)
+            post.likes = likes.filter(like => like.pid === post.pid)
+            post.textLike = this.formatInfoTextLike(user, post.likes)
+            post.comments = comments.filter(cmt => cmt.pid === post.pid)
+            post.likeBoolean = post.likes.some(like => like.uid === user.uid) ? true : false
+        })
+        return posts
     }
 }
 
-export default helper
+export default posts
