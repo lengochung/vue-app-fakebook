@@ -8,7 +8,7 @@ import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
 import RadListView from 'nativescript-ui-listview/vue'
 import BottomNavigation from '@nativescript-community/ui-material-bottom-navigation/vue';
 
-TNSFontIcon.debug = true; 
+TNSFontIcon.debug = true;
 TNSFontIcon.paths = { fa: './assets/css/fontawesome.min.css', far: './assets/css/regular.min.css', fas: './assets/css/solid.min.css', fab: './assets/css/brand.min.css' }
 TNSFontIcon.loadCss() 
 Vue.filter('fonticon', fonticon) 
