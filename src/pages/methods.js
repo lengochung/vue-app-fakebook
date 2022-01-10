@@ -15,7 +15,6 @@ const methods = {
             if(rs.result.some(user => user.username === this.inputText.user)) {
                 // Xác minh mật khẩu
                 if(rs.result.some(user => user.username === this.inputText.user && user.password === this.inputText.password)) {
-                    
                     // Đăng nhập thành công
                     let newUser = rs.result.find(user => user.username === this.inputText.user && user.password === this.inputText.password)
 

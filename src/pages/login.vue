@@ -13,7 +13,7 @@
   <Page>
     <ActionBar title="" style="height: 0;">
     </ActionBar>
-    <FlexboxLayout justifyContent="center" flexDirection="column"
+    <FlexboxLayout justifyContent="flex-end" flexDirection="column"
       class="bg"
     >
         <StackLayout orientation="" :hidden="hidden">

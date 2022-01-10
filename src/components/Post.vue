@@ -14,7 +14,7 @@
     font-size: 12px; margin-left: 20px; margin-top: 6px;; color: rgb(44, 43, 43);
   }
   .postlikeIcon {
-    width: 60px; height: 60px; border-radius: 360px;
+    width: 60px; height: 60px; border-radius: 360px; 
   }
   .postIcon {
     width: 80px; height: 80px; border-radius: 360px; margin-left: 60px;
@@ -25,6 +25,9 @@
   .line {
     background: linear-gradient(to left, orangered, green, lightblue);
     height: 2px; margin: 10px 0 30px 0;
+  }
+  .infolikecmt {
+    margin-top: 25px;
   }
 </style>
 
@@ -48,13 +51,18 @@
         <Label :text="post.content" textWrap="true" 
           style="margin-bottom: 40px; margin-top: 20px;" />
       </StackLayout>
-      <!-- Info likes and comments -->
-      <GridLayout rows="auto, *, auto" columns="auto, *, auto">
+      <!-- Image of post -->
+      <StackLayout>
+        <Image :src="post.imagePost" stretch="aspectFill" @tap="tapImage(post)" />
+      </StackLayout>
+      
+      <!-- Info likes and comments --> 
+      <GridLayout rows="auto, *, auto" columns="auto, *, auto" class="infolikecmt">
         <Image src="res://like" stretch="aspectFill" class="postlikeIcon"  row="0" column="0" />
         <Label :text="post.textLike" 
           textWrap="true" class="postlikeText"
           row="0" column="1" />
-        <Label row="0" column="2"
+        <Label row="0" column="2" 
           :text="post.comments.length > 0 ? post.comments.length + ' bình luận' : ''"
           class="postlikeText" textWrap="true" />
       </GridLayout>
@@ -88,6 +96,9 @@
 
 import DB from '../APIs'
 import helper from "../helpers"
+
+import ImagePost from "./ImagePost.vue"
+
 export default {
     props: ["post", "user"],
     computed: {
@@ -111,6 +122,16 @@ export default {
 
         this.post.textLike = helper.posts.formatInfoTextLike(this.user, this.post.likes)
       
+      },
+      tapImage() {
+        this.$navigateTo(ImagePost, {
+          props: {
+            post: this.post
+          },
+          transition: {
+            name: "slideTop", duration: 300, curve: "easeIn"
+          }
+        }) 
       }
     },
 }

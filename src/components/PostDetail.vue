@@ -1,9 +1,9 @@
 <style>
-    Actionbar .nameUser {
+     .nameUser {
         margin-top: 15px;
         font-size: 18px; font-weight: bold;
     }
-    ActionBar .back {
+     .back {
         width: 100px; height: 100px;
     }
 </style>
