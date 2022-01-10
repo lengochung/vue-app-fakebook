@@ -1,0 +1,17 @@
+B1: cài
+
+ns plugin add @nstudio/nativescript-cardview
+
+or
+
+tns plugin add @nstudio/nativescript-cardview@1.0.0
+
+mở hàm main.js copy đoạn code bên dưới
+
+Vue.registerElement(
+
+  'CardView',
+
+  () => require('@nstudio/nativescript-cardview').CardView
+
+);
