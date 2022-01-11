@@ -57,15 +57,17 @@
                     </GridLayout>
                     
                     <!-- Comments -->
-                    <StackLayout dock="bottom" :style="{height: post.comments.length*150 + 'px'}">
-                      <ListView  for="comment in post.comments"  separatorColor="transparent">
-                        <v-template>
-                            <Comment :comment="comment" />
-                        </v-template>
-                    </ListView>
-                    </StackLayout>
+                    <DockLayout dock="bottom" 
+                        :style="{height: post.imagePost === '' ? '' : post.comments.length*151 + 'px'}"
+                    >
+                        <ListView dock="top"  for="comment in post.comments"  separatorColor="transparent">
+                            <v-template>
+                                <Comment :comment="comment" />
+                            </v-template>
+                        </ListView>
+                    </DockLayout>
                 </DockLayout>
-     
+
             </ScrollView>
             <!--  -->
                 
