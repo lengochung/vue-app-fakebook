@@ -34,7 +34,7 @@
 <template>
  
   <StackLayout class="post">
-      
+      <!-- Avatar and name author post -->
       <GridLayout rows="auto, *, auto" columns="auto, *, auto">
         <Image row="0" column="0"
           :src="post.image" stretch="aspectFill" class="avatarUser" />
@@ -70,6 +70,7 @@
       
       <!-- Like, comment, share -->
       <LikeCommentShare :likeBoolean="post.likeBoolean" :likeHandle="likeHandle" />
+     
   </StackLayout>
   
 </template>

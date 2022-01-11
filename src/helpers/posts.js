@@ -3,7 +3,7 @@ import config from "../config"
 
 const posts = {
     formatDate: dateString => {
-        let date = new Date(dateString).getTime()
+        let date = new Date(dateString).getTime() + 7*60*60*1000
         let different = time() - date
         // const [hour, minute, second] = [Math.floor(different/(1000*60*60)%24), Math.floor(different/60000%60), Math.floor(different/1000%60)]
         if(different <= 90000)

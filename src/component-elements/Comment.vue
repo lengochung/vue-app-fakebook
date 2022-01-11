@@ -1,5 +1,5 @@
 <template>
-    <AbsoluteLayout >
+    <AbsoluteLayout>
         <Image :src="comment.image"
             stretch="aspectFill" class="avatarUser"
             top="0" left="20" />
@@ -19,5 +19,5 @@ export default {
 </script>
 
 <style>
-
+    
 </style>

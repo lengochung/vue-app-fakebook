@@ -1,5 +1,6 @@
 import helper from "../helpers"
 import ImagePost from "../components/ImagePost.vue"
+import DB from "../APIs"
 
 const methods = {
     likeHandle() {
@@ -25,7 +26,14 @@ const methods = {
           name: "slideTop", duration: 300, curve: "easeIn"
         }
       }) 
+    },
+    sendComment() { 
+        this.heightScroll = 600
+        if(this.textComment !== "") {
+            DB.load("comments").insert(this.user.uid, this.post.pid, this.textComment)
+            this.textComment = ""
+        } 
     }
   }
 
-  export default methods
+  export default methods 

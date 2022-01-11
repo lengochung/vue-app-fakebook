@@ -6,6 +6,9 @@
      .back {
         width: 100px; height: 100px;
     }
+    .formComment {
+        padding: 15px 30px 0 30px; 
+    }
 </style>
 
 <template>
@@ -25,8 +28,8 @@
             </GridLayout>
         </ActionBar>
         <DockLayout stretchLastChild="true">
-          <ScrollView dock="top" height="500">
-                <DockLayout stretchlLastChild="true">
+          <ScrollView dock="top" :height="heightScroll" @tap="heightScroll=600">
+                <DockLayout dock="top" stretchlLastChild="true">
                     
                     <StackLayout dock="top"> 
                         <Label :text="post.content" textWrap="true"
@@ -52,36 +55,30 @@
                         :text="post.comments.length > 0 ? post.comments.length + ' bình luận' : ''"
                         class="postlikeText" textWrap="true" />
                     </GridLayout>
-
+                    
                     <!-- Comments -->
-                        <ListView dock="bottom" for="comment in post.comments"  separatorColor="transparent">
-                            <v-template>
-                                <Comment :comment="comment" />
-                            </v-template>
-                        </ListView>
+                    <StackLayout dock="bottom" :style="{height: post.comments.length*150 + 'px'}">
+                      <ListView  for="comment in post.comments"  separatorColor="transparent">
+                        <v-template>
+                            <Comment :comment="comment" />
+                        </v-template>
+                    </ListView>
+                    </StackLayout>
                 </DockLayout>
-            
+     
             </ScrollView>
             <!--  -->
-            <StackLayout dock="bottom">
-              <Label text="sldkfjsdf" textWrap="true" />
-              <MDBottomNavigation selectedIndex="0">
-                  <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
-                  <MDTabStrip>
-                      <MDTabStripItem>
-                          <Image src="res://home" class="fas"></Image>
-                          <!-- <Image src="font://&#xf015;" class="fas"></Image> -->
-                      </MDTabStripItem>
-                      <MDTabStripItem class="special">
-                          <Image src="res://messenger" class="fas"></Image>
-                      </MDTabStripItem>
-                      <MDTabStripItem class="special">
-                          <Image src="res://profile" class="fas"></Image>
-                      </MDTabStripItem>
-                  </MDTabStrip>
-
-          </MDBottomNavigation>
-            </StackLayout>
+                
+                <StackLayout orientation="horizontal" dock="bottom" class="formComment">
+                    <TextField hint="Nhập bình luận ..." width="320"
+                        v-model="textComment"
+                        @focus="heightScroll=300" 
+                        @blur="heightScroll=600" 
+                        @returnPress="heightScroll=600" 
+                    />
+                    <Image src="res://send" @tap="sendComment" stretch="aspectFill" class="avatarUser" />
+                    
+                </StackLayout>   
         </DockLayout> 
     </Page>
 </template>
@@ -101,7 +98,9 @@ export default {
         ...mapGetters(["user", "posts"]),
     },
     data: () => ({
-        post: {}
+        post: {},
+        textComment: "",
+        heightScroll: 600
     }),
     methods: {
         back() {
@@ -113,6 +112,7 @@ export default {
         },
         likeHandle: methods.likeHandle, 
         tapImage: methods.tapImage,
+        sendComment: methods.sendComment,
     },
     created() {
         this.post = this.posts[this.i]
