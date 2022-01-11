@@ -1,4 +1,5 @@
 import helper from "../helpers"
+import ImagePost from "../components/ImagePost.vue"
 
 const methods = {
     likeHandle() {

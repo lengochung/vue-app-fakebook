@@ -69,25 +69,7 @@
       <Label class="line" textWrap="true" />
       
       <!-- Like, comment, share -->
-      <FlexboxLayout justifyContent="space-between"  flexDirection="row">
-        <!-- Like -->
-        <GridLayout  columns="*,auto, *" @tap="likeHandle">
-          <Image src="res://like2" row="0" column="0" class="postIcon" stretch="aspectFill" />
-          <Label text="Thích" row="0" col="1" textWrap="true" class="postlcs"
-            :style="{ color: post.likeBoolean ? 'blue' : 'black' }" />
-        </GridLayout>
-        <!-- Comment -->
-        <GridLayout  columns="*, auto, *">
-          <Image src="res://comment" row="0" column="0" class="postIcon" stretch="aspectFill" />
-          <Label text="Bình luận" row="0" col="1" textWrap="true" class="postlcs" />
-        </GridLayout>
-        <!-- Share -->
-        <GridLayout  columns="*, auto, *">
-          <Image src="res://share" row="0" column="0" class="postIcon" stretch="aspectFill" />
-          <Label text="Chia sẻ" row="0" col="1" textWrap="true" class="postlcs" />
-        </GridLayout>
-        
-      </FlexboxLayout>
+      <LikeCommentShare :likeBoolean="post.likeBoolean" :likeHandle="likeHandle" />
   </StackLayout>
   
 </template>
@@ -98,10 +80,13 @@ import DB from '../APIs'
 import helper from "../helpers"
 import methods from '../components-sources/post-postdetail'
 
-import ImagePost from "./ImagePost.vue"
+import LikeCommentShare from "./LikeCommentShare.vue"
 
 export default {
     props: ["post", "user"],
+    components: {
+      LikeCommentShare
+    },
     computed: {
       
     },

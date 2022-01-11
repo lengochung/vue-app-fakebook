@@ -31,7 +31,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 
-import Post from "./Post.vue"
+import Post from "../component-elements/Post.vue"
 import PostDetail from "./PostDetail.vue"
 
 export default {

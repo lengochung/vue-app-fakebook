@@ -24,9 +24,8 @@
                 </StackLayout>
             </GridLayout>
         </ActionBar>
-        
-          
-            <ScrollView>
+        <DockLayout stretchLastChild="true">
+          <ScrollView dock="top" height="500">
                 <DockLayout stretchlLastChild="true">
                     
                     <StackLayout dock="top"> 
@@ -40,24 +39,7 @@
                     <!-- Line -->
                      <Label class="line" style="margin: 0 30px;" textWrap="true" dock="top" />
                     <!-- Like, comment, share --> 
-                    <GridLayout dock="top" columns="*, *, *" style="padding: 30px 0;">
-                            <!-- Like -->
-                            <GridLayout col="0"  columns="*,auto, *" @tap="likeHandle">
-                                <Image src="res://like2" row="0" column="0" class="postIcon" stretch="aspectFill" />
-                                <Label text="Thích" row="0" col="1" textWrap="true" class="postlcs"
-                                    :style="{ color: post.likeBoolean ? 'blue' : 'black' }" />
-                            </GridLayout>
-                            <!-- Comment -->
-                            <GridLayout col="1"  columns="*, auto, *">
-                                <Image src="res://comment" row="0" column="0" class="postIcon" stretch="aspectFill" />
-                                <Label text="Bình luận" row="0" col="1" textWrap="true" class="postlcs" />
-                            </GridLayout>
-                            <!-- Share -->
-                            <GridLayout col="2"  columns="*, auto, *">
-                                <Image src="res://share" row="0" column="0" class="postIcon" stretch="aspectFill" />
-                                <Label text="Chia sẻ" row="0" col="1" textWrap="true" class="postlcs" />
-                            </GridLayout>
-                    </GridLayout>
+                    <LikeCommentShare :likeHandle="likeHandle" :likeBoolean="post.likeBoolean" />
                     <!-- Line -->
                      <Label dock="top" class="line" style="margin: 0 30px;" textWrap="true" />
                     <!-- Info likes and comments --> 
@@ -71,26 +53,36 @@
                         class="postlikeText" textWrap="true" />
                     </GridLayout>
 
-                    <!--  -->
-                        <ListView dock="bottom" for="cmt in post.comments" @itemTap="itemTap" separatorColor="transparent">
+                    <!-- Comments -->
+                        <ListView dock="bottom" for="comment in post.comments"  separatorColor="transparent">
                             <v-template>
-                                <AbsoluteLayout >
-                                    <Image :src="cmt.image"
-                                        stretch="aspectFill" class="avatarUser"
-                                        top="0" left="20" />
-                                    <StackLayout top="0" left="80" width="300">
-                                        <Label :text="cmt.uname" textWrap="true" style="font-weight: bold; color: black;" />
-                                        <Label :text="cmt.comment" textWrap="true" style="color: black; marign-right: 20px;" />
-                                        <Label :text="cmt.time" textWrap="true" style="font-size: 12px;" />
-                                    </StackLayout>
-                                
-                                </AbsoluteLayout>
+                                <Comment :comment="comment" />
                             </v-template>
                         </ListView>
                 </DockLayout>
             
             </ScrollView>
-       
+            <!--  -->
+            <StackLayout dock="bottom">
+              <Label text="sldkfjsdf" textWrap="true" />
+              <MDBottomNavigation selectedIndex="0">
+                  <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
+                  <MDTabStrip>
+                      <MDTabStripItem>
+                          <Image src="res://home" class="fas"></Image>
+                          <!-- <Image src="font://&#xf015;" class="fas"></Image> -->
+                      </MDTabStripItem>
+                      <MDTabStripItem class="special">
+                          <Image src="res://messenger" class="fas"></Image>
+                      </MDTabStripItem>
+                      <MDTabStripItem class="special">
+                          <Image src="res://profile" class="fas"></Image>
+                      </MDTabStripItem>
+                  </MDTabStrip>
+
+          </MDBottomNavigation>
+            </StackLayout>
+        </DockLayout> 
     </Page>
 </template>
 
@@ -98,9 +90,13 @@
 import { mapGetters } from 'vuex'
 import methods from '../components-sources/post-postdetail';
 
-import ImagePost from "./ImagePost.vue"
+import Comment from "../component-elements/Comment.vue"
+import LikeCommentShare from "../component-elements/LikeCommentShare.vue"
 export default {
     props: ["i"],
+    components: {
+        Comment, LikeCommentShare
+    },
     computed: {
         ...mapGetters(["user", "posts"]),
     },
@@ -117,17 +113,12 @@ export default {
         },
         likeHandle: methods.likeHandle, 
         tapImage: methods.tapImage,
-        itemTap({}) {
-            console.log(this.post.comments);
-        }
-        
     },
     created() {
         this.post = this.posts[this.i]
     },
     mounted() {
         setInterval(() => {
-            console.log("PostDetail");
             this.post = this.posts[this.i]
         }, 3000);
     },

@@ -42,15 +42,16 @@ const posts = {
             post.comments = this.formatUrlImageList(post.comments)
             post.likeBoolean = post.likes.some(like => like.uid === user.uid) ? true : false
             post.imagePost = this.formatUrlImage(post.imagePost)
+            post.image = this.formatUrlImage(post.image)
         })
-        return posts
+        return posts 
     },
     formatComments(comments) {
         comments.forEach(cmt => {
             cmt.time = this.formatDate(cmt.time)
         });
         return comments
-    },
+    }, 
     formatUrlImageList(list) {
         list.forEach(item => {
             item.image = this.formatUrlImage(item.image)
@@ -58,7 +59,9 @@ const posts = {
         return list
     },
     formatUrlImage(image) {
+        if(image !== '')
             return config.URL_IMAGE + image
+        return ''
     }
 }
 
