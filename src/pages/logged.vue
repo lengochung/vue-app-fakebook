@@ -1,12 +1,12 @@
 <style>
   .avatarUser {
-    width: 90px; height: 90px; border-radius: 360px;
+    width: 100px; height: 100px; border-radius: 360px;
   }
 </style>
 
 <template>
     <Page>
-      <ActionBar title="FakeBook" icon="">
+      <ActionBar title="fakeBook" icon="">
         <ActionChild :user="user" />
       </ActionBar>
     <StackLayout>
@@ -62,6 +62,12 @@ export default {
   },
   data: () => ({
     
-  })
+  }),
+  mounted() { 
+      setInterval(() => {
+          console.log("Logged", Math.random());
+          this.$store.dispatch("getPosts")
+      }, 3000); 
+  }
 }
 </script>

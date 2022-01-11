@@ -1,4 +1,5 @@
 import { time } from "@nativescript/core/profiling"
+import config from "../config"
 
 const posts = {
     formatDate: dateString => {
@@ -15,7 +16,8 @@ const posts = {
                         return Math.floor(different/(1000*60*60)/24) + " ngày trước"
                     else return dateString 
     },
-    formatInfoTextLike(user, likes) {
+    formatInfoTextLike(user = {}, likes = []) {
+        if(likes===undefined) likes = []
         if(likes.some(like => like.uid === user.uid)) {
             if(likes.length > 1)
                 return "Bạn và " + (likes.length - 1) + " người khác"
@@ -31,15 +33,32 @@ const posts = {
                 return likes[0].uname + " và " + (likes.length - 1) + " người khác"
         }
     },
-    formatPosts (posts, user, likes, comments) {
+    formatPosts (posts = [], user = {}, likes = [], comments = []) {
         posts.forEach(post => {        
             post.date = this.formatDate(post.date)
-            post.likes = likes.filter(like => like.pid === post.pid)
+            post.likes = this.formatUrlImageList(likes.filter(like => like.pid === post.pid))
             post.textLike = this.formatInfoTextLike(user, post.likes)
-            post.comments = comments.filter(cmt => cmt.pid === post.pid)
+            post.comments = this.formatComments(comments.filter(cmt => cmt.pid === post.pid))
+            post.comments = this.formatUrlImageList(post.comments)
             post.likeBoolean = post.likes.some(like => like.uid === user.uid) ? true : false
+            post.imagePost = this.formatUrlImage(post.imagePost)
         })
         return posts
+    },
+    formatComments(comments) {
+        comments.forEach(cmt => {
+            cmt.time = this.formatDate(cmt.time)
+        });
+        return comments
+    },
+    formatUrlImageList(list) {
+        list.forEach(item => {
+            item.image = this.formatUrlImage(item.image)
+        });
+        return list
+    },
+    formatUrlImage(image) {
+            return config.URL_IMAGE + image
     }
 }
 

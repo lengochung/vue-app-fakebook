@@ -15,6 +15,7 @@
 <template>
   
     <GridLayout class="bghome">
+        
         <ScrollView>
             <ListView class="posts" for="post in posts" @itemTap="tapPost">
                 <v-template>
@@ -43,7 +44,7 @@ export default {
     methods: {
         tapPost({item, index}) {
             this.$navigateTo(PostDetail, { 
-                props: { post: item },
+                props: { i: index },
                 transition: {
                     name: "slideLeft", duration: 300, curve: "easeIn" 
                 }
@@ -54,9 +55,7 @@ export default {
 
     }),
     mounted() { 
-        // setInterval(() => {
-        //     this.$store.dispatch("getPosts")
-        // }, 3000); 
+ 
     }
 }
 </script>

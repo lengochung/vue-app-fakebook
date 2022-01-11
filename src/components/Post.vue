@@ -23,7 +23,7 @@
     margin-top: 20px; margin-left: 60px;
   }
   .line {
-    background: linear-gradient(to left, orangered, green, lightblue);
+    background: linear-gradient(to left, rgb(19, 18, 18), rgb(23, 24, 23), rgb(26, 27, 27));
     height: 2px; margin: 10px 0 30px 0;
   }
   .infolikecmt {
@@ -37,7 +37,7 @@
       
       <GridLayout rows="auto, *, auto" columns="auto, *, auto">
         <Image row="0" column="0"
-          :src="'~/assets/images/' + post.image" stretch="aspectFill" class="avatarUser" />
+          :src="post.image" stretch="aspectFill" class="avatarUser" />
         <StackLayout row="0" column="1">
           <Label class="postUname"
             :text="post.uname" textWrap="true" />
@@ -96,6 +96,7 @@
 
 import DB from '../APIs'
 import helper from "../helpers"
+import methods from '../components-sources/post-postdetail'
 
 import ImagePost from "./ImagePost.vue"
 
@@ -108,31 +109,8 @@ export default {
 
     }),
     methods: {
-      likeHandle() {
-
-        if(this.post.likeBoolean){
-          helper.likes.dislike(this.user, this.post)
-          this.post.likes = this.post.likes.filter(like => like.uid !== this.user.uid)
-        } else {
-          helper.likes.like(this.user, this.post)
-          this.post.likes = [...this.post.likes, this.user]
-        }
-
-        this.post.likeBoolean = !this.post.likeBoolean
-
-        this.post.textLike = helper.posts.formatInfoTextLike(this.user, this.post.likes)
-      
-      },
-      tapImage() {
-        this.$navigateTo(ImagePost, {
-          props: {
-            post: this.post
-          },
-          transition: {
-            name: "slideTop", duration: 300, curve: "easeIn"
-          }
-        }) 
-      }
+      likeHandle: methods.likeHandle,
+      tapImage: methods.tapImage
     },
 }
 </script>

@@ -13,15 +13,15 @@ export default {
         Login
     },
     data: () => ({
-
+        
     })
 }
 </script>
 
 <style>
     ActionBar {
-        background-color: rgb(9, 138, 95);
-        color: #ffffff;
+        background-color: white;
+        color: #161616;
     }
     .hiddenActionBar {
         height: 0;
