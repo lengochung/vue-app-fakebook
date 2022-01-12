@@ -18,6 +18,7 @@
       class="bg"
     >
         <StackLayout orientation="" :hidden="hidden">
+          
           <TextField hint="Tài khoản" 
             autocorrect="true"
             minLength="6" maxLength="12"
@@ -57,7 +58,7 @@ export default {
     }),
     methods: {
       ...mapMutations(["setLogin"]),
-      loginHandle: methods.loginHandle,
+      loginHandle: methods.loginHandle
     },
     mounted() {
        

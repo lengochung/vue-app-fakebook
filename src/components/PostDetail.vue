@@ -8,6 +8,10 @@
     }
     .formComment {
         padding: 15px 30px 0 30px; 
+        background: rgb(219, 217, 217)
+    }
+    .sumLike {
+        font-weight: bold; margin: 20px 0 40px 20px;
     }
 </style>
 
@@ -28,7 +32,7 @@
             </GridLayout>
         </ActionBar>
         <DockLayout stretchLastChild="true">
-          <ScrollView dock="top" :height="heightScroll" @tap="heightScroll=600">
+          <ScrollView dock="top" :height="heightScroll">
                 <DockLayout dock="top" stretchlLastChild="true">
                     
                     <StackLayout dock="top"> 
@@ -46,14 +50,17 @@
                     <!-- Line -->
                      <Label dock="top" class="line" style="margin: 0 30px;" textWrap="true" />
                     <!-- Info likes and comments --> 
-                    <GridLayout dock="top" rows="auto, *, auto" columns="auto, *, auto" class="infolikecmt" style="margin: 10px 40px; margin-bottom: 20px; font-weight: bold;">
+                    <GridLayout dock="top" rows="auto, *, auto" columns="auto, *, auto" 
+                        class="infolikecmt" style="margin: 10px 40px; margin-bottom: 20px; font-weight: bold;"
+                        
+                    >
                         <Image src="res://like" stretch="aspectFill" class="postlikeIcon"  row="0" column="0" />
-                        <Label :text="post.textLike" 
-                        textWrap="true" class="postlikeText"
-                        row="0" column="1" />
-                        <Label row="0" column="2" 
-                        :text="post.comments.length > 0 ? post.comments.length + ' bình luận' : ''"
-                        class="postlikeText" textWrap="true" />
+                        <Label :text="post.textLike" @tap="showlistLikes"
+                            textWrap="true" class="postlikeText"
+                            row="0" column="1" />
+                        <Label row="0" column="2"
+                            :text="post.comments.length > 0 ? post.comments.length + ' bình luận' : ''"
+                            class="postlikeText" textWrap="true" />
                     </GridLayout>
                     
                     <!-- Comments -->
@@ -71,15 +78,37 @@
             </ScrollView>
             <!--  -->
                 
-                <StackLayout orientation="horizontal" dock="bottom" class="formComment">
-                    <TextField hint="Nhập bình luận ..." width="320"
-                        v-model="textComment"
-                        @focus="heightScroll=300" 
-                        @blur="heightScroll=600" 
-                        @returnPress="heightScroll=600" 
-                    />
-                    <Image src="res://send" @tap="sendComment" stretch="aspectFill" class="avatarUser" />
+                <StackLayout dock="bottom" class="formComment">
+                    <!-- list Likes -->
+                    <StackLayout :hidden="hiddenLikes">
+                        <GridLayout columns="auto, * , auto" rows="*" style="height: 120px;">
+                            <Label :text="post.sumLike + ' người thích'" textWrap="true"
+                                class="sumLike" col="0" row="0" />
+                            <Image src="res://arrowdown" stretch="aspectFill" class="avatarUser fas"
+                                col="2" row="0" @tap="hiddenlistLikes" />
+                            
+                        </GridLayout>
+
+                        <ListView for="like in post.likes" @itemTap="" separatorColor="transparent" style="margin: 20px 30px;">
+                            <v-template>
+                            <StackLayout orientation="horizontal">
+                                <Image :src="like.image" stretch="aspectFill" class="avatarUser" />
+                                <Label :text="like.uname" style="font-weight: bold; margin-left: 20px; margin-top: 20px;" />
+                            </StackLayout>
+                            </v-template>
+                        </ListView>
+                    </StackLayout>
+                    <!-- Form comment -->
+                    <StackLayout :hidden="!hiddenLikes" orientation="horizontal">
+                        <TextField hint="Nhập bình luận ..." width="340"
+                            v-model="textComment"
+                            @focus="setheightScroll(300)" 
+                            @blur="setheightScroll(600)" 
+                            @returnPress="setheightScroll(600)" 
+                        />
+                        <Image src="res://send" @tap="sendComment" stretch="aspectFill" class="avatarUser" />
                     
+                    </StackLayout>
                 </StackLayout>   
         </DockLayout> 
     </Page>
@@ -102,7 +131,8 @@ export default {
     data: () => ({
         post: {},
         textComment: "",
-        heightScroll: 600
+        heightScroll: 600,
+        hiddenLikes: true
     }),
     methods: {
         back() {
@@ -115,6 +145,17 @@ export default {
         likeHandle: methods.likeHandle, 
         tapImage: methods.tapImage,
         sendComment: methods.sendComment,
+        setheightScroll(height) {
+            this.heightScroll = height
+        },
+        hiddenlistLikes() {
+            this.setheightScroll(600)
+            this.hiddenLikes = !this.hiddenLikes
+        },
+        showlistLikes() {
+            this.setheightScroll(400)
+            this.hiddenLikes = !this.hiddenLikes
+        }
     },
     created() {
         this.post = this.posts[this.i]
