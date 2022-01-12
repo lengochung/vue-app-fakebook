@@ -22,7 +22,7 @@ Vue.config.silent = false
 Vue.use(RadListView)
 Vue.use(BottomNavigation);
 
-// Vue.registerElement('CardView',() => require('@nstudio/nativescript-cardview').CardView);
+Vue.registerElement('CardView',() => require('@nstudio/nativescript-cardview').CardView);
 
 
 new Vue({

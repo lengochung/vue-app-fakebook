@@ -2,7 +2,7 @@
   <Page>
       
       <Login />
-  </Page>
+  </Page> 
 </template>
 
 <script>
@@ -13,7 +13,7 @@ export default {
         Login
     },
     data: () => ({
-        
+         
     })
 }
 </script>
