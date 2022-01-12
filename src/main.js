@@ -7,6 +7,7 @@ import store from './vuex/store'
 import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
 import RadListView from 'nativescript-ui-listview/vue'
 import BottomNavigation from '@nativescript-community/ui-material-bottom-navigation/vue';
+// import CardView from "nativescript-cardview/vue"
 
 TNSFontIcon.debug = true;
 TNSFontIcon.paths = { fa: './assets/css/fontawesome.min.css', far: './assets/css/regular.min.css', fas: './assets/css/solid.min.css', fab: './assets/css/brand.min.css' }
@@ -22,7 +23,7 @@ Vue.config.silent = false
 Vue.use(RadListView)
 Vue.use(BottomNavigation);
 
-Vue.registerElement('CardView',() => require('@nstudio/nativescript-cardview').CardView);
+Vue.registerElement('CardView',() => require('nativescript-cardview').CardView);
 
 
 new Vue({
