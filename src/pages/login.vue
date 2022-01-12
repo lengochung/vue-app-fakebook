@@ -19,14 +19,14 @@
       class="bg"
     >
     <!--  -->
-      <!-- <StackLayout>
+      <StackLayout>
         <card-view elevation="20">
-          <StackLayout>
-            <Label text="sldkfjsldkfsdlkj" textWrap="true" />
+          <!-- <StackLayout> -->
+            <Label text="sdlfkjsldkfjsldkjf" textWrap="true" />
             
-          </StackLayout>
+          <!-- </StackLayout> -->
         </card-view>
-      </StackLayout> -->
+      </StackLayout>
 
     <!--  -->
 
