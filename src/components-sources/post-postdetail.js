@@ -28,11 +28,11 @@ const methods = {
       }) 
     },
     sendComment() { 
-        this.heightScroll = 600
         if(this.textComment !== "") {
             DB.load("comments").insert(this.user.uid, this.post.pid, this.textComment)
             this.textComment = ""
         } 
+        this.heightScroll = 600
     }
   }
 

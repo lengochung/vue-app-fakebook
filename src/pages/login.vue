@@ -1,6 +1,7 @@
 <style>
    .bg {
-     background: url(res://background);
+     background: url(res://background) no-repeat;
+     background-size: 100% 100%;
    }
    .busy {
      color: black;

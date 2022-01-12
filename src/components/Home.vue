@@ -15,7 +15,9 @@
 <template>
   
     <GridLayout class="bghome">
-        
+        <!-- Form Post -->
+        <FormPost />
+        <!--  -->
         <ScrollView>
             <ListView class="posts" for="post in posts" @itemTap="tapPost">
                 <v-template>
@@ -33,10 +35,11 @@ import { mapGetters, mapMutations } from 'vuex'
 
 import Post from "../component-elements/Post.vue"
 import PostDetail from "./PostDetail.vue"
+import FormPost from "../component-elements/FormPost.vue"
 
 export default {
     components: {
-        Post
+        Post, FormPost
     },
     computed: {
         ...mapGetters(["posts", "user"]),
