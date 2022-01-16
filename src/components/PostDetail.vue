@@ -21,9 +21,10 @@
             <GridLayout columns="*, *, auto, *, *, *, *" >
                 <Image src="res://back" stretch="aspectFill" class="back"
                     row="0" column="0" @tap="back"  /> 
-                <Image :src="post.image"
+                <!-- <Image :src="post.image"
                     stretch="aspectFill" class="avatarUser"
-                    row="0" column="1" />
+                    row="0" column="1" /> -->
+                <ImageUser :image="post.image" :status="post.status" row="0" column="1" />
                  
                 <StackLayout rows="" columns="" row="0" column="2">
                     <Label :text="post.uname" textWrap="true" class="nameUser" />
@@ -92,7 +93,8 @@
                         <ListView for="like in post.likes" @itemTap="" separatorColor="transparent" style="margin: 20px 30px;">
                             <v-template>
                             <StackLayout orientation="horizontal">
-                                <Image :src="like.image" stretch="aspectFill" class="avatarUser" />
+                                <!-- <Image :src="like.image" stretch="aspectFill" class="avatarUser" /> -->
+                                <ImageUser :image="like.image" :status="like.status" />
                                 <Label :text="like.uname" style="font-weight: bold; margin-left: 20px; margin-top: 20px;" />
                             </StackLayout>
                             </v-template>
@@ -100,7 +102,7 @@
                     </StackLayout>
                     <!-- Form comment -->
                     <StackLayout :hidden="!hiddenLikes" orientation="horizontal">
-                        <TextField hint="Nhập bình luận ..." width="340"
+                        <TextField hint="Nhập bình luận ..." width="80%"
                             v-model="textComment"
                             @focus="downHeightScroll" 
                             @blur="upHeightScroll" 
@@ -120,10 +122,11 @@ import methods from '../components-sources/post-postdetail';
 
 import Comment from "../component-elements/Comment.vue"
 import LikeCommentShare from "../component-elements/LikeCommentShare.vue"
+import ImageUser from "../component-elements/ImageUser.vue"
 export default {
     props: ["i"],
     components: {
-        Comment, LikeCommentShare
+        Comment, LikeCommentShare, ImageUser
     },
     computed: {
         ...mapGetters(["user", "posts"]),
@@ -131,7 +134,7 @@ export default {
     data: () => ({
         post: {},
         textComment: "",
-        heightScroll: '90%',
+        heightScroll: '92%',
         hiddenLikes: true
     }),
     methods: {
@@ -145,9 +148,6 @@ export default {
         likeHandle: methods.likeHandle, 
         tapImage: methods.tapImage,
         sendComment: methods.sendComment,
-        // setheightScroll(height) {
-        //     this.heightScroll = height
-        // },
         downHeightScroll() {
             this.heightScroll = '60%'
         },
@@ -155,11 +155,11 @@ export default {
             this.heightScroll = '92%'
         },
         hiddenlistLikes() {
-            this.upHeightScroll
+            this.upHeightScroll()
             this.hiddenLikes = !this.hiddenLikes
         },
         showlistLikes() {
-            downHeightScroll
+            this.downHeightScroll()
             this.hiddenLikes = !this.hiddenLikes
         }
     },

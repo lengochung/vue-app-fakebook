@@ -18,12 +18,12 @@
         <ScrollView scrollBarIndicatorVisible="true">
             <!-- <DockLayout stretchLastChild="true"> -->
                 <ScrollView >
-                     <RadListView ref="listView"
+                     <ListView
                         class="posts" for="post in posts" @itemTap="tapPost">
                         <v-template>
                             <Post  :post="post" :user="user" />
                         </v-template> 
-                    </RadListView> 
+                    </ListView> 
                 </ScrollView>
                
             <!-- </DockLayout> -->

@@ -7,7 +7,12 @@
 <template>
     <Page>
       <ActionBar title="fakeBook" icon="">
-        <ActionChild :user="user" />
+        <ActionItem  @tap="" >
+            <Image :src="user.image" stretch="aspectFill" class="avatarUser"/>
+            
+        </ActionItem>
+        <ActionItem icon="" text="Tài khoản" android.position="popup" @tap="" />
+        <ActionItem icon="" text="Đăng xuất" android.position="popup" @tap="" />
       </ActionBar>
     <StackLayout>
           <MDBottomNavigation selectedIndex="0">
@@ -46,8 +51,6 @@ import Home from "../components/Home.vue"
 import Profile from "../components/Profile.vue"
 import Setting from "../components/Setting.vue"
 
-import ActionChild from "../component-elements/ActionBar.vue"
-
 import { mapGetters } from "vuex"
 
 export default {
@@ -55,7 +58,7 @@ export default {
     this.$store.dispatch("getPosts")
   },
   components: {
-    Home, Profile, Setting, ActionChild
+    Home, Profile, Setting
   },
   computed: {
     ...mapGetters(["user"])

@@ -1,4 +1,5 @@
 import DB from "../../APIs"
+import helper from "../../helpers"
 
 const currentUser = {
     state: {
@@ -10,6 +11,7 @@ const currentUser = {
     mutations: {
         
         setLogin (state, user) {
+            user.image = helper.posts.formatUrlImage(user.image)
             state.user = user
         }
     }

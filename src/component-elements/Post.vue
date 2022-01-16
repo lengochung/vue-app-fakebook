@@ -36,8 +36,9 @@
   <StackLayout class="post">
       <!-- Avatar and name author post -->
       <GridLayout rows="auto, *, auto" columns="auto, *, auto">
-        <Image row="0" column="0"
-          :src="post.image" stretch="aspectFill" class="avatarUser" />
+        <ImageUser :image="post.image" :status="post.status" row="0" column="0" />
+        <!-- <Image row="0" column="0"
+          :src="post.image" stretch="aspectFill" class="avatarUser" /> -->
         <StackLayout row="0" column="1">
           <Label class="postUname"
             :text="post.uname" textWrap="true" />
@@ -83,10 +84,12 @@ import methods from '../components-sources/post-postdetail'
 
 import LikeCommentShare from "./LikeCommentShare.vue"
 
+import ImageUser from "../component-elements/ImageUser.vue"
+
 export default {
     props: ["post", "user"],
     components: {
-      LikeCommentShare
+      LikeCommentShare, ImageUser
     },
     computed: {
       
