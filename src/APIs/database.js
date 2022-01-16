@@ -1,6 +1,6 @@
 import { getJSON } from "@nativescript/core/http"
+import config from "../config"
 
-import { config } from "./config"
 
 // XmlHttpRequest
 class Database {

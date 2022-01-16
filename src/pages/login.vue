@@ -18,19 +18,6 @@
     <FlexboxLayout justifyContent="center" flexDirection="column"
       class="bg"
     >
-    <!--  -->
-      <StackLayout>
-        <card-view elevation="20">
-          <!-- <StackLayout> -->
-            <Label text="sdlfkjsldkfjsldkjf" textWrap="true" />
-            
-          <!-- </StackLayout> -->
-        </card-view>
-      </StackLayout>
-
-    <!--  -->
-
-    
         <StackLayout orientation="" :hidden="hidden">
           
           <TextField hint="Tài khoản" 

@@ -1,6 +1,7 @@
 <template>
-  <StackLayout>
-    <TextView hint="Bạn đang nghĩ gì ..." v-model="textStatus" />
+  <StackLayout class="formpost">
+    <TextField hint="Bạn đang nghĩ gì ..." v-model="textStatus" />
+    <Image src="res://icon" stretch="none" />
     
   </StackLayout>
 </template>
@@ -14,5 +15,7 @@ export default {
 </script>
 
 <style>
-
+  .formpost {
+    height: 200px;
+  }
 </style>

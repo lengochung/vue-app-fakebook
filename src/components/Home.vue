@@ -14,32 +14,34 @@
 
 <template>
   
-    <GridLayout class="bghome">
-        <!-- Form Post -->
-        <FormPost />
-        <!--  -->
-        <ScrollView>
-            <ListView class="posts" for="post in posts" @itemTap="tapPost">
-                <v-template>
-                    <Post  :post="post" :user="user" />
-                </v-template>
-            </ListView>
+   
+        <ScrollView scrollBarIndicatorVisible="true">
+            <!-- <DockLayout stretchLastChild="true"> -->
+                <ScrollView >
+                     <RadListView ref="listView"
+                        class="posts" for="post in posts" @itemTap="tapPost">
+                        <v-template>
+                            <Post  :post="post" :user="user" />
+                        </v-template> 
+                    </RadListView> 
+                </ScrollView>
+               
+            <!-- </DockLayout> -->
+            
         </ScrollView>
-    </GridLayout>
 
    
-</template>
+</template> 
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 
 import Post from "../component-elements/Post.vue"
 import PostDetail from "./PostDetail.vue"
-import FormPost from "../component-elements/FormPost.vue"
 
 export default {
     components: {
-        Post, FormPost
+        Post
     },
     computed: {
         ...mapGetters(["posts", "user"]),
@@ -52,7 +54,7 @@ export default {
                     name: "slideLeft", duration: 300, curve: "easeIn" 
                 }
             })
-        }
+        },
     },
     data: () => ({
 

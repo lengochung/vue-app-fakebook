@@ -102,9 +102,9 @@
                     <StackLayout :hidden="!hiddenLikes" orientation="horizontal">
                         <TextField hint="Nhập bình luận ..." width="340"
                             v-model="textComment"
-                            @focus="setheightScroll(300)" 
-                            @blur="setheightScroll(600)" 
-                            @returnPress="setheightScroll(600)" 
+                            @focus="downHeightScroll" 
+                            @blur="upHeightScroll" 
+                            @returnPress="upHeightScroll" 
                         />
                         <Image src="res://send" @tap="sendComment" stretch="aspectFill" class="avatarUser" />
                     
@@ -131,7 +131,7 @@ export default {
     data: () => ({
         post: {},
         textComment: "",
-        heightScroll: 600,
+        heightScroll: '90%',
         hiddenLikes: true
     }),
     methods: {
@@ -145,15 +145,21 @@ export default {
         likeHandle: methods.likeHandle, 
         tapImage: methods.tapImage,
         sendComment: methods.sendComment,
-        setheightScroll(height) {
-            this.heightScroll = height
+        // setheightScroll(height) {
+        //     this.heightScroll = height
+        // },
+        downHeightScroll() {
+            this.heightScroll = '60%'
+        },
+        upHeightScroll() {
+            this.heightScroll = '92%'
         },
         hiddenlistLikes() {
-            this.setheightScroll(600)
+            this.upHeightScroll
             this.hiddenLikes = !this.hiddenLikes
         },
         showlistLikes() {
-            this.setheightScroll(400)
+            downHeightScroll
             this.hiddenLikes = !this.hiddenLikes
         }
     },

@@ -13,7 +13,6 @@
     "nativescript-localstorage": "^2.0.2",
     "nativescript-ui-listview": "^9.0.4",
     "nativescript-vue": "^2.8.1",
-    "tns-core-modules": "^6.5.27",
     "vue-axios": "^3.4.0",
     "vuex": "^3.5.1"
   },
