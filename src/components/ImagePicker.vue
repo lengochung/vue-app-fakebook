@@ -14,8 +14,9 @@
 </template>
 
 <script>
-// import { Image } from 'tns-core-modules/ui/image';
-// import {File, knownFolders, path} from 'tns-core-modules/file-system';
+import config from '../config';
+import { Image } from 'tns-core-modules/ui/image';
+import {File, knownFolders, path} from 'tns-core-modules/file-system';
 import { ImageSource } from 'tns-core-modules/image-source';
 
 
@@ -37,33 +38,50 @@ export default {
                 selection.forEach((image) => {
                     ImageSource.fromAsset(image)
                         .then(() => {
-                                this.saveFile(image); //Save tmp file
+                            this.saveFile(image); //Save tmp file
                         });
                 });
             });
     },
       
     saveFile(source) {  
-        // const image = new Image();
+        const image = new Image();
         
-        // const folderPath = knownFolders.documents().path;
-        // image.src = source.android;
-        // console.log(image);
+        const folderPath = knownFolders.documents().path;
+        image.src = source.android
 
-        // const fileName = image.src.toString().split('/').pop();
-        // const filePath = path.join(folderPath, fileName);
+        const fileName = image.src.toString().split('/').pop();
+        const filePath = path.join(folderPath, fileName);
         
         // if (saveIt) {
-        //   const imageSource = new ImageSource();
-        //   const saved = imageSource.saveToFile(filePath, 'png');
+          const imageSource = new ImageSource();
+          const saved = imageSource.saveToFile(filePath, 'png');
 
-        //   if (!saved) {
-        //     console.log('[UploadFile] - Cannot save file!');
-        //   }
+          if (!saved) {
+            console.log('[UploadFile] - Cannot save file!');
+          } else {
+            console.log("Saved");
+          }
         // }
         
         // this.value = File.fromPath(filePath);
+        let value = File.fromPath(filePath);
         // console.log('[UploadField] -->', fileName);
+        let form = new FormData()
+        form.append("fileFake", value)
+        console.log(value);
+        // form.set("file", value.extension, "demo.jpg") 
+        form.append("user", "hung")
+      
+        fetch(config.PATH_API + "uploadimage.php", {
+          method: "POST",
+          // headers: {
+          //   "Content_Type": "application/json"
+          // },
+          body: form 
+        }).then(rs => rs.json())
+        .then(rs => console.log("Phan hoi: ", rs))
+        .catch(err => console.log("Failed"))
     },    
     submit() {
         const params = new FormData();
