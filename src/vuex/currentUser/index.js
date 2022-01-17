@@ -8,12 +8,14 @@ const currentUser = {
     getters: {
         user: state => state.user
     },
-    mutations: {
-        
+    mutations: {  
         setLogin (state, user) {
             user.image = helper.posts.formatUrlImage(user.image)
             state.user = user
-        }
+        },
+        setLogout (state) {
+            state.user = {}
+        },
     }
 }
 

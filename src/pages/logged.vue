@@ -7,12 +7,14 @@
 <template>
     <Page>
       <ActionBar title="fakeBook" icon="">
+        <ActionItem  @tap="toCreatePost" >
+            <Image src="res://createpost" stretch="aspectFill" class="avatarUser"/>    
+        </ActionItem>
         <ActionItem  @tap="" >
-            <Image :src="user.image" stretch="aspectFill" class="avatarUser"/>
-            
+            <Image :src="user.image" stretch="aspectFill" class="avatarUser"/>    
         </ActionItem>
         <ActionItem icon="" text="Tài khoản" android.position="popup" @tap="" />
-        <ActionItem icon="" text="Đăng xuất" android.position="popup" @tap="" />
+        <ActionItem icon="" text="Đăng xuất" android.position="popup" @tap="logout" />
       </ActionBar>
     <StackLayout>
           <MDBottomNavigation selectedIndex="0">
@@ -50,10 +52,11 @@
 import Home from "../components/Home.vue"
 import Profile from "../components/Profile.vue"
 import Setting from "../components/Setting.vue"
+import CreatePost from "../components/CreatePost.vue"
 
-import { mapGetters } from "vuex"
+import { mapGetters, mapMutations } from "vuex"
 
-export default {
+export default { 
   created() {
     this.$store.dispatch("getPosts")
   },
@@ -63,12 +66,25 @@ export default {
   computed: {
     ...mapGetters(["user"])
   },
+  methods: {
+    ...mapMutations(["setLogout"]),
+    logout() {
+      this.setLogout()
+      this.$navigateBack()
+    },
+    toCreatePost() {
+      this.$navigateTo(CreatePost, {
+        transition: {
+            name: "slideLeft", duration: 300, curve: "easeIn"
+        }
+      })
+    }
+  },
   data: () => ({
     
   }),
   mounted() { 
       setInterval(() => {
-          console.log("Logged", Math.random());
           this.$store.dispatch("getPosts")
       }, 3000); 
   }
