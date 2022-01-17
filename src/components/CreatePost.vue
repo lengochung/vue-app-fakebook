@@ -2,6 +2,9 @@
   .avatarUser {
     width: 100px; height: 100px; border-radius: 360px;
   }
+  .imgcreatepost {
+       width: 100px; height: 100px;
+  }
 </style>
 
 <template>
@@ -16,12 +19,17 @@
             textWrap="true" />
         
       </ActionBar>
-    <StackLayout>
+    <StackLayout >
         <TextView hint="Bạn đang nghĩ gì ..." height="20%"
             v-model="textInput" editable="true" />
-        <GridLayout rows="*" columns="*, *">
-          <Image src="res://uploadimg" stretch="aspectFill" width="100" height="100" />
-          <Button text="Đăng" @tap="createPost" />
+        <GridLayout rows="*, *" columns="*, *" height="100" @tap="chooseImg">
+            <FlexboxLayout row="0" col="0" justifyContent="center" alignItems="center">
+                <Image src="res://uploadimg"
+                    stretch="aspectFill" class="imgcreatepost" />
+                <Label text="Ảnh" textWrap="true" />
+                
+            </FlexboxLayout>
+          <Button text="Đăng" @tap="createPost" row="0" col="1" />
         </GridLayout>
         
           
@@ -46,6 +54,9 @@ export default {
   },
   methods: {
     createPost() {
+        console.log(this.textInput);
+    },
+    chooseImg() {
         console.log(this.textInput);
     }
   },

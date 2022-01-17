@@ -75,7 +75,7 @@ export default {
     toCreatePost() {
       this.$navigateTo(CreatePost, {
         transition: {
-            name: "slideLeft", duration: 300, curve: "easeIn"
+            name: "slideTop", duration: 300, curve: "easeIn"
         }
       })
     }
