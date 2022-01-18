@@ -6,7 +6,10 @@
        width: 100px; height: 100px;
   }
   .imagePicker {
-    width: 60%; height: auto; margin: 10px 20%;
+    width: 70%; height: auto; margin: 10px 15%;
+  }
+  .alertloadImage {
+    color: rgb(128, 27, 27); margin: 10px auto;
   }
 </style>
 
@@ -23,7 +26,9 @@
         
       </ActionBar>
     <ScrollView >
-        <StackLayout>
+        
+        <StackLayout v-if="!busy">
+            
             <TextView hint="Bạn đang nghĩ gì ..." height="100"
                 v-model="textInput" editable="true" />  
             <GridLayout rows="*, *" columns="*, *" height="100" @tap="selectPicture">
@@ -33,13 +38,14 @@
                     <Label text="Ảnh" textWrap="true" />
                     
                 </FlexboxLayout>
-              <Button text="Đăng" @tap="createPost" row="0" col="1" />
+              <Button text="Đăng" @tap="submitPost" row="0" col="1" />
             </GridLayout>
             <StackLayout class="imagePicker">
+              <Label v-if="onloadImg" class="alertloadImage" text="Nạp ảnh thất bại, chọn lại ảnh" textWrap="true" @tap="selectPicture" />
               <Image :src="value" stretch="aspectFill" />
             </StackLayout>
         </StackLayout>
-          
+          <ActivityIndicator v-if="busy" width="100" height="100" class="busy" :busy="busy" />
     </ScrollView>
   </Page>
 </template>
@@ -53,6 +59,7 @@ import { ImageSource } from '@nativescript/core';
 var imagepicker = require("@nativescript/imagepicker");
 
 import { mapGetters, mapMutations } from "vuex"
+import DB from '../APIs';
 
 export default { 
   created() {
@@ -65,10 +72,8 @@ export default {
     ...mapGetters(["user"])
   },
   methods: {
-    createPost() {
-        console.log(this.textInput);
-    },
-    selectPicture() {       
+    selectPicture() { 
+        this.onloadImg = false      
         const context = imagepicker.create({ mode: "single" });
         context
             .authorize().then(() => context.present())
@@ -82,9 +87,11 @@ export default {
                   });  
               });    
     },   
-    saveFile(img_base64) {  
+    saveFile(img_base64) { 
+        this.filename = Math.floor(Math.random()*100000 + 10000);
+      
         let formData = new FormData()
-        formData.append("filename", Math.floor(Math.random()*100000 + 10000))
+        formData.append("filename", this.filename)
         formData.append("file", img_base64)
        
         console.log("Running");
@@ -92,16 +99,29 @@ export default {
           method: "POST",
           body: formData 
         }).then(rs => rs.json())
-        .then(rs => { alert("Thanh cong"); console.log(rs);})
-        .catch(err => alert("That bai"))     
+        .then(rs => {  
+          console.log(rs);
+        }).catch(err => this.onloadImg = true )     
     },     
-    submit() {    
-        
+    submitPost() {    
+        if(this.textInput!=="") {
+          this.busy = true
+          DB.load("posts").insert(this.user.uid, this.textInput, this.filename + ".png")
+            .then((rs) => {
+              this.$navigateBack()
+            }).catch((err) => {
+              this.busy = false
+              alert("Đăng bài thất bại");
+            });
+        }
     },
   },
   data: () => ({
     textInput: "",
     value: null,
+    filename: null,
+    onloadImg: false,
+    busy: false
   }),
   mounted() { 
       

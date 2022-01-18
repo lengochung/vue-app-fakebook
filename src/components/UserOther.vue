@@ -1,24 +1,29 @@
 <template>
-  
+  <Page>
+    <ActionBar >
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
+        <Label :text="other.uname" id="title" textWrap="true" />
+    </ActionBar>
+    <StackLayout style="height: 300%;">
         <ScrollView>
             <StackLayout>
                 <AbsoluteLayout id="otheravatar" >
                     <Image top="50" left="" id="avatar"
-                        :src="user.image" stretch="aspectFill" />
-                    <Label v-if="user.status==='1'" top="185" left="120" 
+                        :src="other.image" stretch="aspectFill" />
+                    <Label v-if="other.status==='1'" top="185" left="120" 
                         textWrap="true" id="status" />
                     
                 </AbsoluteLayout>
                 <StackLayout style="margin: 30px 0;">
                     <FlexboxLayout justifyContent="center" alignItems="center" flexDirection="column">
-                        <Label :text="user.uname" textWrap="true" id="othername" />
-                        <Label v-if="user.nickname!==''"
-                            :text="user.nickname" textWrap="true" id="nickname" />
+                        <Label :text="other.uname" textWrap="true" id="othername" />
+                        <Label v-if="other.nickname!==''"
+                            :text="other.nickname" textWrap="true" id="nickname" />
                     </FlexboxLayout>    
                 </StackLayout>
                 <StackLayout>
                     <FlexboxLayout justifyContent="space-around" alignItems="center" flexDirection="row">
-                        <Button text="Ảnh" @tap="tap" /> >
+                        <Button text="Ảnh" @tap="" /> >
                         <Button text="Nhắn tin" @tap="" />  
                     </FlexboxLayout>
                 </StackLayout>
@@ -28,11 +33,11 @@
                 <StackLayout id="infomation">
                     <StackLayout orientation="horizontal">
                         <Image src="res://phone" stretch="aspectFill" class="icon" />
-                        <Label :text="user.phone" textWrap="true" class="phone" />   
+                        <Label :text="other.phone" textWrap="true" class="phone" />   
                     </StackLayout>
                     <StackLayout orientation="horizontal">
                         <Image src="res://gender" stretch="aspectFill" class="icon" />
-                        <Label :text="user.gender" textWrap="true" class="phone" />   
+                        <Label :text="other.gender" textWrap="true" class="phone" />   
                     </StackLayout>
                 </StackLayout>
                 <StackLayout>
@@ -43,13 +48,13 @@
                 </StackLayout>
                 <StackLayout style="margin: 20px 30px;"
                     v-for="(post, index) in list" :key="post.pid">
-                        <PostUser :post="post" :user="user" :i="index" />
+                        <PostUser :post="post" :user="other" :i="index" />
                         <Label class="line" style="height: 5px;" textWrap="true" />
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-   
-  
+    </StackLayout>
+  </Page>
 </template>
 
 <script>
@@ -57,20 +62,18 @@ import { mapGetters } from 'vuex'
 import PostUser from "../component-elements/PostUser.vue"
 import PostDetail from "../components/PostDetail.vue"
 export default {
-    props: ["user"],
+    props: ["other"],
     components: {
         PostUser,
     },
     computed: {
-        ...mapGetters(["posts"]),
-        list() {
-            return this.posts.filter(post => post.uid === this.user.uid)
-        }
+        ...mapGetters(["user", "posts"])
     },
     data: () => ({
-         
+        list: []
     }),
     mounted() {
+        this.list = this.posts.filter(post => post.uid === this.other.uid)
     },
     methods: {
         tapPost(item, index) {
@@ -80,7 +83,7 @@ export default {
                     name: "slideLeft", duration: 300, curve: "easeIn" 
                 }
             })
-        },
+        }
     },
 }
 </script>

@@ -40,7 +40,7 @@
         <!-- <Image row="0" column="0"
           :src="post.image" stretch="aspectFill" class="avatarUser" /> -->
         <StackLayout row="0" column="1">
-          <Label class="postUname"
+          <Label class="postUname" @tap="goUserOther(post)"
             :text="post.uname" textWrap="true" />
           <Label :text="post.date" textWrap="true" class="postDate" />     
         </StackLayout>
@@ -85,6 +85,7 @@ import methods from '../components-sources/post-postdetail'
 import LikeCommentShare from "./LikeCommentShare.vue"
 
 import ImageUser from "../component-elements/ImageUser.vue"
+import UserOther from "../components/UserOther.vue"
 
 export default {
     props: ["post", "user"],
@@ -99,7 +100,14 @@ export default {
     }),
     methods: {
       likeHandle: methods.likeHandle,
-      tapImage: methods.tapImage
+      tapImage: methods.tapImage,
+      goUserOther(post) {
+        this.$navigateTo(UserOther, { 
+          props: {
+            other: post
+          }
+        })
+      }
     },
 }
 </script>

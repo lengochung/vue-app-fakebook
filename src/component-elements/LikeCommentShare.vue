@@ -21,8 +21,12 @@
 </template>
 
 <script>
+
 export default {
-    props: ["likeHandle", "likeBoolean"]
+    props: ["likeHandle", "likeBoolean"],
+    methods: {
+        
+    },
 }
 </script>
 

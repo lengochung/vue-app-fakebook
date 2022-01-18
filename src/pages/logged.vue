@@ -37,7 +37,7 @@
                       <Home />
                   </MDTabContentItem>
                   <MDTabContentItem>
-                      <Profile />
+                      <Profile :user="user"/>
                   </MDTabContentItem>
                   <MDTabContentItem>
                       <Setting />
@@ -64,7 +64,7 @@ export default {
     Home, Profile, Setting
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(["user", "posts"])
   },
   methods: {
     ...mapMutations(["setLogout"]),
@@ -83,9 +83,9 @@ export default {
   data: () => ({
     
   }),
-  mounted() { 
+  mounted() {
       setInterval(() => {
-        console.log("Realtem .........................");
+        console.log("Realtiming .........................");
           this.$store.dispatch("getPosts")
       }, 3000); 
   }

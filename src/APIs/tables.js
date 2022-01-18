@@ -5,9 +5,9 @@ const tables = {
     users: class extends Query { table = "users" },
     posts: class extends Query { 
         table = "posts";
-        insert (uid, content) {
-            let sql = `insert into ${this.table} values(null, '${uid}', '', '${content}', 0, 0, null)`
-            this.none(sql)
+        insert (uid, content, image) {
+            let sql = `insert into ${this.table} values(null,'${uid}','','${content}','${image}',0,0, null)`
+            return this.none(sql) 
         }
     },
     likes: class extends Query { 

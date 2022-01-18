@@ -1,7 +1,7 @@
 import Vue from 'nativescript-vue'
 
 import Run from "./components/Run"
-// import ImagePicker from "./components/ImagePicker"
+// import UserOther from "./components/UserOther"
 
 import store from './vuex/store'
 

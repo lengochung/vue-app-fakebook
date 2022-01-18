@@ -92,7 +92,7 @@
 
                         <ListView for="like in post.likes" @itemTap="" separatorColor="transparent" style="margin: 20px 30px;">
                             <v-template>
-                            <StackLayout orientation="horizontal">
+                            <StackLayout orientation="horizontal" @tap="goUserOther(like)">
                                 <!-- <Image :src="like.image" stretch="aspectFill" class="avatarUser" /> -->
                                 <ImageUser :image="like.image" :status="like.status" />
                                 <Label :text="like.uname" style="font-weight: bold; margin-left: 20px; margin-top: 20px;" />
@@ -123,6 +123,7 @@ import methods from '../components-sources/post-postdetail';
 import Comment from "../component-elements/Comment.vue"
 import LikeCommentShare from "../component-elements/LikeCommentShare.vue"
 import ImageUser from "../component-elements/ImageUser.vue"
+import UserOther from "../components/UserOther.vue"
 export default {
     props: ["i"],
     components: {
@@ -161,7 +162,14 @@ export default {
         showlistLikes() {
             this.downHeightScroll()
             this.hiddenLikes = !this.hiddenLikes
-        }
+        },
+        goUserOther(post) {
+            this.$navigateTo(UserOther, { 
+            props: {
+                other: post
+            }
+        })
+      }
     },
     created() {
         this.post = this.posts[this.i]
