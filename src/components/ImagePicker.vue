@@ -1,13 +1,15 @@
 <template>
     <Page>
         <ActionBar title="Title" icon="">
-          <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="goBack" />
+          <NavigationButton text="Back" android.systemIcon="ic_menu_back" />
           <ActionItem icon="" text="Left" ios.position="left" />
           <ActionItem icon="" text="Right" ios.position="right"  />
         </ActionBar>
       <StackLayout class="btn btn-grey">
         <Label text="upload" @tap="selectPicture()"></Label>
         <Button class="btn btn-primary" text="Submit" @tap="submit()"></Button>
+        <Image :src="value" stretch="none" ref="image" />
+        
       </StackLayout>
       
     </Page>
@@ -15,9 +17,9 @@
 
 <script>
 import config from '../config';
-import { Image } from 'tns-core-modules/ui/image';
-import {File, knownFolders, path} from 'tns-core-modules/file-system';
-import { ImageSource } from 'tns-core-modules/image-source';
+import { ImageSource } from '@nativescript/core';
+import { Image } from '@nativescript/core/ui/image';
+import { File, knownFolders, path } from '@nativescript/core/file-system';
 
 
 var imagepicker = require("@nativescript/imagepicker");
@@ -37,67 +39,31 @@ export default {
             .then((selection) => {
                 selection.forEach((image) => {
                     ImageSource.fromAsset(image)
-                        .then(() => {
-                            this.saveFile(image); //Save tmp file
+                        .then((imgSrc) => {
+                            this.value = image.android
+                         
+                            this.saveFile(imgSrc.toBase64String("png"|"jpg"|"jpeg", 32)); //Save tmp file
                         });
                 });
             });
     },
       
-    saveFile(source) {  
-        const image = new Image();
-        
-        const folderPath = knownFolders.documents().path;
-        image.src = source.android
-
-        const fileName = image.src.toString().split('/').pop();
-        const filePath = path.join(folderPath, fileName);
-        
-        // if (saveIt) {
-          const imageSource = new ImageSource();
-          const saved = imageSource.saveToFile(filePath, 'png');
-
-          if (!saved) {
-            console.log('[UploadFile] - Cannot save file!');
-          } else {
-            console.log("Saved");
-          }
-        // }
-        
-        // this.value = File.fromPath(filePath);
-        let value = File.fromPath(filePath);
-        // console.log('[UploadField] -->', fileName);
-        let form = new FormData()
-        form.append("fileFake", value)
-        console.log(value);
-        // form.set("file", value.extension, "demo.jpg") 
-        form.append("user", "hung")
-      
+    saveFile(img_base64) {  
+        let formData = new FormData()
+        formData.append("filename", Math.floor(Math.random()*100000 + 10000))
+        formData.append("file", img_base64)
+       
+        console.log("Running");
         fetch(config.PATH_API + "uploadimage.php", {
           method: "POST",
-          // headers: {
-          //   "Content_Type": "application/json"
-          // },
-          body: form 
+          body: formData 
         }).then(rs => rs.json())
-        .then(rs => console.log("Phan hoi: ", rs))
-        .catch(err => console.log("Failed"))
-    },    
-    submit() {
-        const params = new FormData();
-        params.append('file', this.value);
+        .then(rs => alert("Thanh cong"))
+        .catch(err => alert("That bai"))     
+    },     
+    submit() { 
         
-        // axios({
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data',
-        //   },
-        //   method: 'POST',
-        //   params,
-        // })
-        //   .then((response) => console.log(response));
     },
   },
-  
-
-};
+};  
 </script>
