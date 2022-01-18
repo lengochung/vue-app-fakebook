@@ -60,7 +60,9 @@ export default {
 
     }),
     mounted() { 
- 
+        // setInterval(() => {
+        //   this.$store.dispatch("getPosts")
+        // }, 3000); 
     }
 }
 </script>

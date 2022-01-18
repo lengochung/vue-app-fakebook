@@ -85,6 +85,7 @@ export default {
   }),
   mounted() { 
       setInterval(() => {
+        console.log("Realtem .........................");
           this.$store.dispatch("getPosts")
       }, 3000); 
   }

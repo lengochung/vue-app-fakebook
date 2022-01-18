@@ -1,14 +1,14 @@
 import Vue from 'nativescript-vue'
 
 import Run from "./components/Run"
-import ImagePicker from "./components/ImagePicker"
+// import ImagePicker from "./components/ImagePicker"
 
 import store from './vuex/store'
 
 import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
 import RadListView from 'nativescript-ui-listview/vue'
 import BottomNavigation from '@nativescript-community/ui-material-bottom-navigation/vue';
-// import CardView from ""
+
 
 TNSFontIcon.debug = true;
 TNSFontIcon.paths = { fa: './assets/css/fontawesome.min.css', far: './assets/css/regular.min.css', fas: './assets/css/solid.min.css', fab: './assets/css/brand.min.css' }
@@ -29,5 +29,5 @@ Vue.use(BottomNavigation);
 
 new Vue({
   store,
-  render: h => h('frame', [h(ImagePicker)])
+  render: h => h('frame', [h(Run)])
 }).$start();

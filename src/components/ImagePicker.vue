@@ -42,11 +42,11 @@ export default {
                         .then((imgSrc) => {
                             this.value = image.android
                          
-                            this.saveFile(imgSrc.toBase64String("png"|"jpg"|"jpeg", 32)); //Save tmp file
+                            this.saveFile(imgSrc.toBase64String("png"|"jpg"|"jpeg")); //Save tmp file
                         });
-                });
-            });
-    },
+                });  
+            });    
+    },  
       
     saveFile(img_base64) {  
         let formData = new FormData()
@@ -58,10 +58,10 @@ export default {
           method: "POST",
           body: formData 
         }).then(rs => rs.json())
-        .then(rs => alert("Thanh cong"))
+        .then(rs => { alert("Thanh cong"); console.log(rs);})
         .catch(err => alert("That bai"))     
     },     
-    submit() { 
+    submit() {    
         
     },
   },
