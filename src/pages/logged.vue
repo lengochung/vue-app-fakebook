@@ -37,10 +37,11 @@
                       <Home />
                   </MDTabContentItem>
                   <MDTabContentItem>
-                      <Profile :user="user"/>
+                      <Setting />
                   </MDTabContentItem>
                   <MDTabContentItem>
-                      <Setting />
+                      
+                      <Profile :user="user"/>
                   </MDTabContentItem>
 
           </MDBottomNavigation>
