@@ -14,7 +14,12 @@ const currentUser = {
             state.user = user
         },
         setLogout (state) {
-            state.user = {}
+            DB.load("users").updateWhere("status", 0, "uid", state.user.uid)
+                .then((result) => {
+                    state.user = {}
+                }).catch((err) => {
+                    
+                });
         },
     }
 }
