@@ -85,10 +85,10 @@ export default {
     
   }),
   mounted() {
-      setInterval(() => {
-        console.log("Realtiming .........................");
-          this.$store.dispatch("getPosts")
-      }, 3000); 
+      // setInterval(() => {
+      //   console.log("Realtiming .........................");
+      //     this.$store.dispatch("getPosts")
+      // }, 3000); 
   }
 }
 </script>

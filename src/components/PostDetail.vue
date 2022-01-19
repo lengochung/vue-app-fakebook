@@ -68,11 +68,31 @@
                     <DockLayout dock="bottom" 
                         :style="{height: post.imagePost === '' ? '' : post.comments.length*151 + 'px'}"
                     >
-                        <ListView dock="top"  for="comment in post.comments"  separatorColor="transparent">
-                            <v-template>
-                                <Comment :comment="comment" />
-                            </v-template>
-                        </ListView>
+                        <RadListView dock="top"  for="comment in post.comments"
+                            ref="listview" swipeActions="true"
+                            @itemSwipeProgressStarted="onSwipe"  
+                            separatorColor="transparent">
+                                <v-template>
+                                    <Comment :comment="comment" />
+                                </v-template>
+                                <!-- Edit, Delete -->
+                                <v-template name="itemswipe">
+                                    <GridLayout columns="auto, *, auto" rows="*" >
+                                        <FlexboxLayout justifyContent="center" alignItems="center"
+                                            @tap="onLeftClick" 
+                                            background="green"
+                                            id="edit-view" col="0" row="0" class="swipe-item left" >
+                                            <Label text="Sửa" textAlignment="center" width="70" height="70" @tap="showModal" />
+                                        </FlexboxLayout>
+                                        <FlexboxLayout justifyContent="center" alignItems="center"
+                                            @tap="onRightClick" 
+                                            backgroundColor="red"
+                                            id="delete-view" col="2" row="0" class="swipe-item right" >
+                                            <Label text="Xóa" textAlignment="center" width="70" height="70" />
+                                        </FlexboxLayout>
+                                    </GridLayout>
+                                </v-template> 
+                        </RadListView>
                     </DockLayout>
                 </DockLayout>
 
@@ -90,15 +110,16 @@
                             
                         </GridLayout>
 
-                        <ListView for="like in post.likes" @itemTap="" separatorColor="transparent" style="margin: 20px 30px;">
+                        <ListView for="like in post.likes"
+                            separatorColor="transparent" style="margin: 20px 30px;">
                             <v-template>
-                            <StackLayout orientation="horizontal" @tap="goUserOther(like)">
-                                <!-- <Image :src="like.image" stretch="aspectFill" class="avatarUser" /> -->
-                                <ImageUser :image="like.image" :status="like.status" />
-                                <Label :text="like.uname" style="font-weight: bold; margin-left: 20px; margin-top: 20px;" />
-                            </StackLayout>
+                                <StackLayout orientation="horizontal" @tap="goUserOther(like)">
+                                    <!-- <Image :src="like.image" stretch="aspectFill" class="avatarUser" /> -->
+                                    <ImageUser :image="like.image" :status="like.status" />
+                                    <Label :text="like.uname" style="font-weight: bold; margin-left: 20px; margin-top: 20px;" />
+                                </StackLayout>
                             </v-template>
-                        </ListView>
+                        </ListView> 
                     </StackLayout>
                     <!-- Form comment -->
                     <StackLayout :hidden="!hiddenLikes" orientation="horizontal">
@@ -114,7 +135,7 @@
                 </StackLayout>   
         </DockLayout> 
     </Page>
-</template>
+</template> 
 
 <script>
 import { mapGetters } from 'vuex'
@@ -124,6 +145,7 @@ import Comment from "../component-elements/Comment.vue"
 import LikeCommentShare from "../component-elements/LikeCommentShare.vue"
 import ImageUser from "../component-elements/ImageUser.vue"
 import UserOther from "../components/UserOther.vue"
+import DB from '../APIs';
 export default {
     props: ["i"],
     components: {
@@ -168,8 +190,32 @@ export default {
             props: {
                 other: post
             }
-        })
-      }
+            })
+        },
+        onSwipe ({ data, object }) {
+          const swipelimit = data.swipeLimits
+          const swipeview = object
+          //show view
+          const left = swipeview.getViewById("edit-view")
+          const right = swipeview.getViewById("delete-view")
+          // Nguong keo'
+          swipelimit.left = left.getMeasuredWidth()
+          swipelimit.right = right.getMeasuredWidth() 
+          swipelimit.threshold = left.getMeasuredWidth()/2
+        },
+        onRightClick({ object }) {
+            console.log(object.bindingContext);
+            let cmt = object.bindingContext
+            DB.load("comments").deleteWhere("cid", cmt.cid)
+                .then((result) => {
+                    this.post.comments = this.post.comments.filter(comt => comt.cid !== cmt.pid)
+                }).catch((err) => {
+                    
+                });
+        },
+        onLeftClick({ object }) {
+            console.log(object);
+        }
     },
     created() {
         this.post = this.posts[this.i]

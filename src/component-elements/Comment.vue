@@ -1,9 +1,7 @@
 <template>
-    <AbsoluteLayout>
-        <!-- <Image :src="comment.image"
-            stretch="aspectFill" class="avatarUser"
-            top="0" left="20" /> -->
-        <ImageUser @tap="goUserOther(comment)" :image="comment.image" :status="comment.status" top="0" left="20" />
+    <AbsoluteLayout background="white" >
+        <ImageUser @tap="goUserOther(comment)" :image="comment.image" 
+            :status="comment.status" top="0" left="20" />
         <StackLayout top="0" left="80" width="300">
             <Label @tap="goUserOther(comment)"
                 :text="comment.uname" textWrap="true" style="font-weight: bold; color: black;" />
