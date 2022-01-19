@@ -15,3 +15,6 @@ Vue.registerElement(
   () => require('@nstudio/nativescript-cardview').CardView
 
 );
+
+********
+https://github.com/lengochung/vue-app-fakebook.git
