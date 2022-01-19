@@ -102,7 +102,7 @@
                     </StackLayout>
                     <!-- Form comment -->
                     <StackLayout :hidden="!hiddenLikes" orientation="horizontal">
-                        <TextField hint="Nhập bình luận ..." width="80%"
+                        <TextField hint="Nhập bình luận ..." width="85%"
                             v-model="textComment"
                             @focus="downHeightScroll" 
                             @blur="upHeightScroll" 
