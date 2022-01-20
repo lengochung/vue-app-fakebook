@@ -5,8 +5,8 @@
         <StackLayout top="0" left="80" width="300">
             <Label @tap="goUserOther(comment)"
                 :text="comment.uname" textWrap="true" style="font-weight: bold; color: black;" />
-            <Label :text="comment.comment" textWrap="true" style="color: black; marign-right: 20px;" />
-            <Label :text="comment.time" textWrap="true" style="font-size: 12px;" />
+            <Label :text="comment.comment" textWrap="true" style="color: black;" />
+            <Label :text="comment.time" textWrap="true" style="font-size: 12px;" textAlignment="right" />
         </StackLayout>
 
     </AbsoluteLayout>

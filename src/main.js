@@ -1,7 +1,7 @@
 import Vue from 'nativescript-vue'
 
 import Run from "./components/Run"
-// import UserOther from "./components/UserOther"
+// import B1 from "./components/B1"
 
 import store from './vuex/store'
 

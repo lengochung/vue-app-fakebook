@@ -13,6 +13,9 @@
     .sumLike {
         font-weight: bold; margin: 20px 0 40px 20px;
     }
+    .swipe-item {
+        width: 120px; height: 120px;
+    }
 </style>
 
 <template>
@@ -70,28 +73,32 @@
                     >
                         <RadListView dock="top"  for="comment in post.comments"
                             ref="listview" swipeActions="true"
+                            @itemTap="itemTap"
                             @itemSwipeProgressStarted="onSwipe"  
                             separatorColor="transparent">
                                 <v-template>
                                     <Comment :comment="comment" />
                                 </v-template>
                                 <!-- Edit, Delete -->
-                                <v-template name="itemswipe">
-                                    <GridLayout columns="auto, *, auto" rows="auto" >
-                                        <FlexboxLayout justifyContent="center" alignItems="center" flexDirection="column"
+                                    <v-template name="itemswipe">
+                                    <GridLayout columns="*, auto, auto" rows="auto">
+                                        <FlexboxLayout 
+                                            justifyContent="center" alignItems="center" flexDirection="column"
                                             @tap="onLeftClick" 
                                             background="green"
-                                            id="edit-view" col="0" row="0" class="swipe-item left" >
-                                            <Label text="Sửa" textAlignment="center" width="70" height="70" @tap="showModal" />
+                                            id="edit-view" col="1" row="0" class="swipe-item left" >
+                                            <Label text="Sửa" textAlignment="center" />
                                         </FlexboxLayout>
-                                        <FlexboxLayout justifyContent="center" alignItems="center"
+                                        <FlexboxLayout 
+                                            justifyContent="center" alignItems="center" flexDirection="column"
                                             @tap="onRightClick" 
                                             backgroundColor="red"
                                             id="delete-view" col="2" row="0" class="swipe-item right" >
-                                            <Label text="Xóa" textAlignment="center" width="70" height="70" />
+                                            <Label text="Xóa" textAlignment="center" />
                                         </FlexboxLayout>
                                     </GridLayout>
                                 </v-template> 
+                               
                         </RadListView>
                     </DockLayout>
                 </DockLayout>
@@ -146,6 +153,7 @@ import LikeCommentShare from "../component-elements/LikeCommentShare.vue"
 import ImageUser from "../component-elements/ImageUser.vue"
 import UserOther from "../components/UserOther.vue"
 import DB from '../APIs';
+import { Dialogs } from '@nativescript/core';
 export default {
     props: ["i"],
     components: {
@@ -172,7 +180,7 @@ export default {
         tapImage: methods.tapImage,
         sendComment: methods.sendComment,
         downHeightScroll() {
-            this.heightScroll = '60%'
+            this.heightScroll = '85%'
         },
         upHeightScroll() {
             this.heightScroll = '92%'
@@ -182,39 +190,59 @@ export default {
             this.hiddenLikes = !this.hiddenLikes
         },
         showlistLikes() {
-            this.downHeightScroll()
+            this.heightScroll = "60%"
             this.hiddenLikes = !this.hiddenLikes
         },
         goUserOther(post) {
             this.$navigateTo(UserOther, { 
-            props: {
-                other: post
-            }
+                props: { other: post }
             })
         },
-        onSwipe ({ data, object }) {
-          const swipelimit = data.swipeLimits
-          const swipeview = object
-          //show view
-          const left = swipeview.getViewById("edit-view")
-          const right = swipeview.getViewById("delete-view")
-          // Nguong keo'
-          swipelimit.left = left.getMeasuredWidth()
-          swipelimit.right = right.getMeasuredWidth() 
-          swipelimit.threshold = left.getMeasuredWidth()/2
+        itemTap({ item, index}) {
+           
+        },
+        onSwipe ({ data, object, index}) {
+            if(this.post.comments[index].uid===this.user.uid) {
+                const swipelimit = data.swipeLimits
+                //show view
+                const left = object.getViewById("edit-view")
+                const right = object.getViewById("delete-view")
+                // Nguong keo'
+                swipelimit.right = right.getMeasuredWidth() + left.getMeasuredWidth()
+                swipelimit.threshold = right.getMeasuredWidth()/2
+            } else {
+                // Not Swipe
+                const swipelimit = data.swipeLimits
+                        swipelimit.left = 0
+                        swipelimit.right = 0 
+                        swipelimit.threshold = 0
+            }
         },
         onRightClick({ object }) {
-            console.log(object.bindingContext);
-            let cmt = object.bindingContext
-            DB.load("comments").deleteWhere("cid", cmt.cid)
+            let comment = object.bindingContext
+            DB.load("comments").deleteWhere("cid", comment.cid)
                 .then((result) => {
-                    this.post.comments = this.post.comments.filter(comt => comt.cid !== cmt.pid)
+                    this.post.comments = this.post.comments.filter(comt => comt.cid !== comment.cid)
                 }).catch((err) => {
                     
                 });
         },
         onLeftClick({ object }) {
-            console.log(object);
+            let comment = object.bindingContext
+            Dialogs.prompt({
+                okButtonText: "Lưu",
+                cancelButtonText: "Hủy",
+                defaultText: comment.comment
+            }).then(rs => {
+                if(rs.result) {
+                    DB.load("comments").updateWhere("comment", rs.text, "cid", comment.cid)
+                        .then((result) => {
+                            object.bindingContext.comment = rs.text
+                        }).catch((err) => {
+                            Dialogs.alert("Kiểm tra Internet của bạn.")
+                        });
+                }
+            })
         }
     },
     created() {
