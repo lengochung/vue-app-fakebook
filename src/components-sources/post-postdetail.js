@@ -32,7 +32,7 @@ const methods = {
             DB.load("comments").insert(this.user.uid, this.post.pid, this.textComment)
             this.textComment = ""
         } 
-        this.heightScroll = 600
+        this.upHeightScroll()
     }
   }
 

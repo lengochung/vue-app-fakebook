@@ -77,8 +77,8 @@
                                 </v-template>
                                 <!-- Edit, Delete -->
                                 <v-template name="itemswipe">
-                                    <GridLayout columns="auto, *, auto" rows="*" >
-                                        <FlexboxLayout justifyContent="center" alignItems="center"
+                                    <GridLayout columns="auto, *, auto" rows="auto" >
+                                        <FlexboxLayout justifyContent="center" alignItems="center" flexDirection="column"
                                             @tap="onLeftClick" 
                                             background="green"
                                             id="edit-view" col="0" row="0" class="swipe-item left" >
