@@ -35,6 +35,8 @@
           <Button text="Go" @tap="loginHandle"
             :hidden="inputText.user.length > 0 && inputText.password.length > 0 ? false : true"
           />
+          <Button :text="demof" @tap="demo" />
+          
           
         </StackLayout>
       <ActivityIndicator ref="load" width="100" height="100" class="busy" :busy="hidden" />
@@ -43,7 +45,9 @@
 </template>
 
 <script>
+import { LocalNotifications } from 'nativescript-local-notifications'
 import { mapMutations } from 'vuex'
+import nof from '../notifications'
 
 import methods from "./methods"
 
@@ -56,13 +60,20 @@ export default {
       alert: {
         user: "", password: ""
       },
+      demof: "asdad"
     }),
     methods: {
       ...mapMutations(["setLogin"]),
-      loginHandle: methods.loginHandle
+      loginHandle: methods.loginHandle,
+      demo: nof.demo
     },
     mounted() {
        
-    }
+    },
+    created() {
+        // LocalNotifications.addOnMessageReceivedCallback(data => {
+        //     this.demof = data.body
+        // });
+    },
 }
 </script>

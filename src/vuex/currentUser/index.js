@@ -3,7 +3,9 @@ import helper from "../../helpers"
 
 const currentUser = {
     state: {
-        user: {}
+        user: {
+            uid: 0
+        }
     },
     getters: {
         user: state => state.user

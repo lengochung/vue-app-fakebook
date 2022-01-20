@@ -88,7 +88,7 @@ export default {
       setInterval(() => {
         console.log("Realtiming .........................");
           this.$store.dispatch("getPosts")
-      }, 3000); 
+      }, 5000); 
   }
 }
 </script>

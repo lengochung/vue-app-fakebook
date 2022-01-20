@@ -1,5 +1,7 @@
+import { Dialogs } from "@nativescript/core";
 import DB from "../../APIs"
 import helper from "../../helpers";
+import { onSchedulePost } from "../../notifications/posts-nof";
 
 const modulePosts = {
     state: {
@@ -20,8 +22,12 @@ const modulePosts = {
                     let posts = rs.result.posts
                     // sort and sync data 
                     posts = helper.posts.formatPosts(posts, getters.user, rs.result.likes, rs.result.comments)
+                    // Notifications
+                    onSchedulePost(getters.posts, posts, getters.user)
                     // call mutations set posts
-                    commit("setPosts", posts) 
+                    if(getters.posts != posts)
+                        commit("setPosts", posts) 
+                
                 } else
                     return Promise.reject()
             }).catch((err) => {
