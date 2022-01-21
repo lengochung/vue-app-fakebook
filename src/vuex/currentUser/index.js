@@ -23,6 +23,9 @@ const currentUser = {
                     
                 });
         },
+        setPassword(state, password) {
+            state.user.password = password
+        }
     }
 }
 

@@ -70,11 +70,12 @@
 
 <script>
 import { Dialogs, inputType } from '@nativescript/core'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import DB from '../APIs'
 export default {
     computed: {
-        ...mapGetters(["user"])
+        ...mapGetters(["user"]),
+        ...mapMutations(["setPassword"])
     },
     data: () => ({
         editImg: true,
@@ -108,16 +109,16 @@ export default {
                         if(rs.userName.length < 8 || rs.userName.length > 20) {
                             this.confirmNewPassword(this.loginInit("Vui lòng nhập 8-20 ký tự", rs.userName))
                         } else {
-                                if(rs.userName == rs.password) {
-                                    DB.load("users").updateWhere("password", rs.password, "uid", this.user.uid)
-                                        .then(rslt => {
-                                            this.user.password = rs.password
-                                            Dialogs.alert("Cập nhật thành công mật khẩu")
-                                        })
-                                        .catch(err => Dialogs.alert("Vui lòng kiểm tra kết nối"))
-                                } else {
-                                    this.confirmNewPassword(this.loginInit("Xác nhận không trùng. Nhập lại", rs.userName))
-                                }
+                            if(rs.userName == rs.password) {
+                                DB.load("users").updateWhere("password", rs.password, "uid", this.user.uid)
+                                    .then(rslt => {
+                                        this.setPassword(rs.password)
+                                        Dialogs.alert("Cập nhật thành công mật khẩu")
+                                    })
+                                    .catch(err => Dialogs.alert("Vui lòng kiểm tra kết nối"))
+                            } else {
+                                this.confirmNewPassword(this.loginInit("Xác nhận không trùng. Nhập lại", rs.userName))
+                            }
                         }
                     }
                 })
