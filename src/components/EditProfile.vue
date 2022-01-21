@@ -74,8 +74,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import DB from '../APIs'
 export default {
     computed: {
-        ...mapGetters(["user"]),
-        ...mapMutations(["setPassword"])
+        ...mapGetters(["user"])
     },
     data: () => ({
         editImg: true,
@@ -102,6 +101,7 @@ export default {
 
     },
     methods: {
+         ...mapMutations(["setPassword"]),
         confirmNewPassword(loginInit) {
             Dialogs.login(loginInit)
                 .then((rs) => {
@@ -113,9 +113,13 @@ export default {
                                 DB.load("users").updateWhere("password", rs.password, "uid", this.user.uid)
                                     .then(rslt => {
                                         this.setPassword(rs.password)
+                                        console.log(this.user, 1);
                                         Dialogs.alert("Cập nhật thành công mật khẩu")
                                     })
-                                    .catch(err => Dialogs.alert("Vui lòng kiểm tra kết nối"))
+                                    .catch(err => {
+                                        console.log(this.user, 2);
+                                        Dialogs.alert("Vui lòng kiểm tra kết nối")
+                                    })
                             } else {
                                 this.confirmNewPassword(this.loginInit("Xác nhận không trùng. Nhập lại", rs.userName))
                             }

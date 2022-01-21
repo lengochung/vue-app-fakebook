@@ -9,7 +9,7 @@ const currentUser = {
     },
     getters: {
         user: state => state.user
-    },
+    }, 
     mutations: {  
         setLogin (state, user) {
             user.image = helper.posts.formatUrlImage(user.image)
