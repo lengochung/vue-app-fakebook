@@ -47,8 +47,8 @@
                          text="Bài viết" id="title" textWrap="true" />
                 </StackLayout>
                 <StackLayout style="margin: 20px 30px;"
-                    v-for="(post, index) in list" :key="post.pid">
-                        <PostUser :post="post" :user="user" :i="index" />
+                    v-for="post in list" :key="post.pid">
+                        <PostUser :post="post" :user="user" :pid="post.pid" />
                         <Label class="line" style="height: 5px;" textWrap="true" />
                 </StackLayout>
             </StackLayout>
@@ -80,7 +80,7 @@ export default {
     methods: {
         tapPost(item, index) {
             this.$navigateTo(PostDetail, { 
-                props: { i: index },
+                props: { pid: item.pid },
                 transition: {
                     name: "slideLeft", duration: 300, curve: "easeIn" 
                 }

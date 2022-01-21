@@ -155,7 +155,7 @@ import UserOther from "../components/UserOther.vue"
 import DB from '../APIs';
 import { Dialogs } from '@nativescript/core';
 export default {
-    props: ["i"],
+    props: ["pid"],
     components: {
         Comment, LikeCommentShare, ImageUser
     },
@@ -246,11 +246,11 @@ export default {
         }
     },
     created() {
-        this.post = this.posts[this.i]
+        this.post = this.posts.find(post => post.pid == this.pid)
     },
     mounted() {
         setInterval(() => {
-            this.post = this.posts[this.i]
+            this.post = this.posts.find(post => post.pid == this.pid)
         }, 3000);
     },
 }

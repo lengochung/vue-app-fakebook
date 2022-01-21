@@ -47,8 +47,8 @@
                     <Label style="margin-left: 30px; margin-bottom: 50px;" text="Bài viết" id="title" textWrap="true" />
                 </StackLayout>
                 <StackLayout style="margin: 20px 30px;"
-                    v-for="(post, index) in list" :key="post.pid">
-                        <PostUser :post="post" :user="other" :i="index" />
+                    v-for="post in list" :key="post.pid">
+                        <PostUser :post="post" :user="other" :pid="post.pid" />
                         <Label class="line" style="height: 5px;" textWrap="true" />
                 </StackLayout>
             </StackLayout>
@@ -76,14 +76,14 @@ export default {
         this.list = this.posts.filter(post => post.uid === this.other.uid)
     },
     methods: {
-        tapPost(item, index) {
-            this.$navigateTo(PostDetail, { 
-                props: { i: index },
-                transition: {
-                    name: "slideLeft", duration: 300, curve: "easeIn" 
-                }
-            })
-        }
+        // tapPost(item, index) {
+        //     this.$navigateTo(PostDetail, { 
+        //         props: { i: index  },
+        //         transition: {
+        //             name: "slideLeft", duration: 300, curve: "easeIn" 
+        //         }
+        //     })
+        // }
     },
 }
 </script>

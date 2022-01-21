@@ -49,9 +49,9 @@ export default {
         ...mapGetters(["posts", "user"]),
     },
     methods: {
-        tapPost({item, index}) {
+        tapPost({item}) {
             this.$navigateTo(PostDetail, { 
-                props: { i: index },
+                props: { pid: item.pid },
                 transition: {
                     name: "slideLeft", duration: 300, curve: "easeIn" 
                 }

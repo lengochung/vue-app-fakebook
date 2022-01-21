@@ -89,7 +89,7 @@ import UserOther from "../components/UserOther.vue"
 import PostDetail from "../components/PostDetail.vue"
 
 export default {
-    props: ["post", "user", "i"],
+    props: ["post", "user", "pid"],
     components: {
       LikeCommentShare, ImageUser
     },
@@ -111,7 +111,7 @@ export default {
         }, 
         tapPost() {
                 this.$navigateTo(PostDetail, { 
-                    props: { i: this.i },
+                    props: { pid: this.pid },
                     transition: {
                         name: "slideLeft", duration: 300, curve: "easeIn" 
                     }
