@@ -13,7 +13,7 @@
         <ActionItem  @tap="" >
             <Image :src="user.image" stretch="aspectFill" class="avatarUser"/>    
         </ActionItem>
-        <ActionItem icon="" text="Chình sửa tài khoản" android.position="popup" @tap="goEditProfile" />
+        <ActionItem icon="" text="Chỉnh sửa tài khoản" android.position="popup" @tap="goEditProfile" />
         <ActionItem icon="" text="Đăng xuất" android.position="popup" @tap="logout" />
       </ActionBar>
     <StackLayout>
@@ -93,10 +93,10 @@ export default {
     
   }),
   mounted() {
-      // setInterval(() => {
-      //   console.log("Realtiming .........................");
-      //     this.$store.dispatch("getPosts")
-      // }, 5000); 
+      setInterval(() => {
+        console.log("Realtiming .........................");
+          this.$store.dispatch("getPosts")
+      }, 5000); 
   }
 }
 </script>

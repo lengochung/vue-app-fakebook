@@ -25,7 +25,19 @@ const currentUser = {
         },
         setPassword(state, password) {
             state.user.password = password
-        }
+        },
+        setImage(state, image) {
+            state.user.image = image
+        },
+        uname(state, uname) {
+            state.user.uname = uname
+        },
+        nickname(state, nickname) {
+            state.user.nickname = nickname
+        },
+        phone(state, phone) {
+            state.user.phone = phone
+        },
     }
 }
 
