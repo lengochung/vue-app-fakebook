@@ -23,22 +23,14 @@ export default {
         // ...mapMutations(["setLogin"])
     },
     data: () => ({
-        
+         
     }),
     created() {
-        setInterval(() => {
-            console.log("Realtiming .........................");
-            this.$store.dispatch("getPosts")
-        }, 5000);
-        LocalNotifications.addOnMessageReceivedCallback(data => {
-            loginFromResponseNofPost({
-                uid: "501200018",
-                uname: "Le Ngoc Hung",
-                image: "hung.png",
-                gender: "Nam", 
-                phone: '0987',
-            }, this)
-        });
+        // setInterval(() => {
+        //     console.log("Realtiming .........................");
+        //     this.$store.dispatch("getPosts")
+        // }, 5000);
+        
         
     },
 }

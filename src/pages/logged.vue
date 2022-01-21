@@ -13,7 +13,7 @@
         <ActionItem  @tap="" >
             <Image :src="user.image" stretch="aspectFill" class="avatarUser"/>    
         </ActionItem>
-        <ActionItem icon="" text="Tài khoản" android.position="popup" @tap="" />
+        <ActionItem icon="" text="Chình sửa tài khoản" android.position="popup" @tap="goEditProfile" />
         <ActionItem icon="" text="Đăng xuất" android.position="popup" @tap="logout" />
       </ActionBar>
     <StackLayout>
@@ -54,6 +54,7 @@ import Home from "../components/Home.vue"
 import Profile from "../components/Profile.vue"
 import Setting from "../components/Setting.vue"
 import CreatePost from "../components/CreatePost.vue"
+import EditProfile from "../components/EditProfile.vue"
 
 import { mapGetters, mapMutations } from "vuex"
 
@@ -79,16 +80,23 @@ export default {
             name: "slideTop", duration: 300, curve: "easeIn"
         }
       })
+    },
+    goEditProfile() {
+        this.$navigateTo(EditProfile, {
+          transition: {
+            name: "slideRight", duration: 300, curve: "easeIn"
+          }
+        })
     }
   },
   data: () => ({
     
   }),
   mounted() {
-      setInterval(() => {
-        console.log("Realtiming .........................");
-          this.$store.dispatch("getPosts")
-      }, 5000); 
+      // setInterval(() => {
+      //   console.log("Realtiming .........................");
+      //     this.$store.dispatch("getPosts")
+      // }, 5000); 
   }
 }
 </script>

@@ -34,6 +34,8 @@
 </template> 
 
 <script>
+import { LocalNotifications } from 'nativescript-local-notifications'
+import { loginFromResponseNofPost } from "../notifications/on-handle-nof-not-run"
 import { mapGetters, mapMutations } from 'vuex'
 
 import Post from "../component-elements/Post.vue"
@@ -63,6 +65,17 @@ export default {
         // setInterval(() => {
         //   this.$store.dispatch("getPosts")
         // }, 3000); 
-    }
+    },
+    created() {
+        LocalNotifications.addOnMessageReceivedCallback(data => {
+            loginFromResponseNofPost({
+                uid: "501200018",
+                uname: "Le Ngoc Hung",
+                image: "hung.png",
+                gender: "Nam", 
+                phone: '0987',
+            }, this)
+        });
+    },
 }
 </script>

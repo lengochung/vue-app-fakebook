@@ -25,6 +25,10 @@
                 <StackLayout>
                     <Label class="line" textWrap="true" />
                 </StackLayout>
+                <StackLayout>
+                    <Label style="margin-left: 30px; margin-bottom: 50px;"
+                         text="Thông tin cá nhân" id="title" textWrap="true" />
+                </StackLayout>
                 <StackLayout id="infomation">
                     <StackLayout orientation="horizontal">
                         <Image src="res://phone" stretch="aspectFill" class="icon" />
@@ -39,7 +43,8 @@
                     <Label class="line" textWrap="true" />
                 </StackLayout>
                 <StackLayout>
-                    <Label style="margin-left: 30px; margin-bottom: 50px;" text="Bài viết" id="title" textWrap="true" />
+                    <Label style="margin-left: 30px; margin-bottom: 50px;"
+                         text="Bài viết" id="title" textWrap="true" />
                 </StackLayout>
                 <StackLayout style="margin: 20px 30px;"
                     v-for="(post, index) in list" :key="post.pid">
