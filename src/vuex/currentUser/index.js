@@ -4,7 +4,8 @@ import helper from "../../helpers"
 const currentUser = {
     state: {
         user: {
-            uid: 0
+            uid: 0,
+            uname: ""
         }
     },
     getters: {

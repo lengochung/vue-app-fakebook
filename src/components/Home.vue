@@ -15,20 +15,17 @@
 <template>
   
    
-        <ScrollView scrollBarIndicatorVisible="true">
-            <!-- <DockLayout stretchLastChild="true"> -->
-                <ScrollView >
+        
+                
                      <ListView
                         class="posts" for="post in posts" @itemTap="tapPost">
                         <v-template>
                             <Post  :post="post" :user="user" />
                         </v-template> 
-                    </ListView> 
-                </ScrollView>
+                    </ListView>  
+                
                
-            <!-- </DockLayout> -->
-            
-        </ScrollView>
+           
 
    
 </template> 

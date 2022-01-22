@@ -24,7 +24,7 @@ class Database {
     
     ast_post () {
         const target = "ast.php"
-        return this.XmlHResquest(target)
+        return this.XmlHResquest(target) 
     }
     // ******
     

@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import currentUser from './currentUser';
 import moduleBells from './moduleBells'; 
 import moduleLikes from './moduleLikes';
+import moduleMessenger from './moduleMessenger';
 import modulePosts from './modulePosts';
 import moduleUsers from './moduleUsers';
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
       user: currentUser,
       posts: modulePosts,
       likes: moduleLikes,
-      bells: moduleBells
+      bells: moduleBells,
+      messages: moduleMessenger
     }
 });

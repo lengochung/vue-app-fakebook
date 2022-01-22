@@ -71,6 +71,7 @@ import Profile from "../components/Profile.vue"
 import Bells from "../components/Bells.vue"
 import CreatePost from "../components/CreatePost.vue"
 import EditProfile from "../components/EditProfile.vue"
+import HomeMessenger from "../messenger/HomeMessenger.vue"
 
 import { mapGetters, mapMutations } from "vuex"
 
@@ -80,7 +81,8 @@ export default {
      setInterval(() => {
         console.log("Realtiming .........................");
           this.$store.dispatch("getPosts")
-         
+          this.$store.dispatch("getMessages")
+
       }, 5000);
   },
   components: {
@@ -113,7 +115,7 @@ export default {
         })
     },
     messenger() {
-      
+      this.$navigateTo(HomeMessenger)
     }
   },
   data: () => ({

@@ -1,3 +1,4 @@
+
 import Query from "./query";
 
 // List tables on database
@@ -35,6 +36,10 @@ const tables = {
         constructor(table) {
             super()
             this.table = table
+        }
+        getMessages() {
+            const target = "messages.php?table=" + this.table
+            return this.XmlHResquest(target)
         }
     }
 }
