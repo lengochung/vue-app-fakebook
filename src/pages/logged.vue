@@ -2,6 +2,13 @@
   .avatarUser {
     width: 100px; height: 100px; border-radius: 360px;
   }
+  .messenger {
+    background: url(res://messenger) no-repeat;
+    background-size: 100% 100%;
+    width: 100px; height: 100px; border-radius: 360px;
+    color: red; font-weight: bold; font-size: 30px;
+    text-align: right;
+  }
 </style>
 
 <template>
@@ -10,6 +17,10 @@
         <ActionItem  @tap="toCreatePost" >
             <Image src="res://createpost" stretch="aspectFill" class="avatarUser"/>    
         </ActionItem>
+        <Actionitem @tap="messenger">
+            <Label class="messenger" text="3" textWrap="true" />
+            
+        </Actionitem>
         <ActionItem icon="" text="Chỉnh sửa tài khoản" android.position="popup" @tap="goEditProfile" />
         <ActionItem icon="" text="Đăng xuất" android.position="popup" @tap="logout" />
       </ActionBar>
@@ -17,7 +28,7 @@
           <MDBottomNavigation selectedIndex="0">
                   <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
                   <MDTabStrip>
-                      <MDTabStripItem>
+                      <MDTabStripItem class="special">
                           <Image src="res://home" class="fas"></Image>
                           <Label text="Feeds" textWrap="true" />
                           
@@ -100,6 +111,9 @@ export default {
             name: "slideRight", duration: 300, curve: "easeIn"
           }
         })
+    },
+    messenger() {
+      
     }
   },
   data: () => ({
