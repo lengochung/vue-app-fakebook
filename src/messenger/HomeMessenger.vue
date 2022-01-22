@@ -9,13 +9,13 @@
             <Button text="CLikc me" @tap="tap" />
             
                
-            <RadListView
+            <!-- <RadListView
                 class="posts" for="msg in messages" @itemTap="tapPost">
                 <v-template>
                     <Label :text="msg.message" textWrap="true" />
                     
                 </v-template> 
-            </RadListView> 
+            </RadListView>  -->
                
                
            
@@ -28,11 +28,11 @@
 import { mapGetters } from 'vuex'
 export default {
     computed: {
-        ...mapGetters(["messages"])
+        ...mapGetters(["messages", "listChat"])
     },
     methods: {
         tap() {
-            console.log(this.listUid);
+            console.log(this.listChat);
         }
     },
 }

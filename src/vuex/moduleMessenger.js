@@ -4,14 +4,15 @@ import helper from "../helpers";
 const moduleMessenger = {
     state: {
         messages: [],
-        listUid: []
+        listChat: []
     },
     mutations: {
         setMessages: (state, messages) => { state.messages = messages },
-        setListUid: (state, listUid) => { state.listUid = listUid },
+        setListChat: (state, listChat) => { state.listChat = listChat },
     },
     getters: {
-        messages: state => state.messages
+        messages: state => state.messages,
+        listChat: state => state.listChat,
     },
     actions: {
         getMessages: ({ commit, getters }) => {
@@ -19,26 +20,26 @@ const moduleMessenger = {
                 .getMessages()
                 .then(rs => {
                     let messages = rs.result.messages
-                    let listUid = rs.result.list
+                    let list = rs.result.list
                     // 
                     messages.forEach(msg => {
                         msg.photo = helper.posts.formatUrlImage(msg.photo)
                         msg.image = helper.posts.formatUrlImage(msg.image)
                         msg.timeSend = helper.posts.formatDate(msg.timeSend)
                     });
-                    let list = []
-                    listUid.forEach(uid => {
-                        list.push(
-                            messages.find(msg => msg.uid == uid)
+                    let listChat = []
+                    list.forEach(item => {
+                        listChat.push(
+                            messages.find(msg => msg.uid == item.uid)
                         )
                     });
                     // 
                     commit("setMessages", messages)
-                    commit("setListUid", list)
+                    commit("setListChat", listChat)
 
                 }).catch(err => {
                     commit("setMessages", getters.messages)
-                    commit("setListUid", getters.listUid)
+                    commit("setListChat", getters.listChat)
                 });
         }
     }
