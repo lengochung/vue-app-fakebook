@@ -10,9 +10,6 @@
         <ActionItem  @tap="toCreatePost" >
             <Image src="res://createpost" stretch="aspectFill" class="avatarUser"/>    
         </ActionItem>
-        <ActionItem  @tap="" >
-            <Image :src="user.image" stretch="aspectFill" class="avatarUser"/>    
-        </ActionItem>
         <ActionItem icon="" text="Chỉnh sửa tài khoản" android.position="popup" @tap="goEditProfile" />
         <ActionItem icon="" text="Đăng xuất" android.position="popup" @tap="logout" />
       </ActionBar>
@@ -22,13 +19,21 @@
                   <MDTabStrip>
                       <MDTabStripItem>
                           <Image src="res://home" class="fas"></Image>
-                          <!-- <Image src="font://&#xf015;" class="fas"></Image> -->
+                          <Label text="Feeds" textWrap="true" />
+                          
                       </MDTabStripItem>
                       <MDTabStripItem class="special">
-                          <Image src="res://messenger" class="fas"></Image>
+                            <Image src="res://bell" class="fas"></Image>
+                            <Label :text="numBells + ' thông báo'" textWrap="true"
+                              :style="{
+                                color: numBells > 0 ? 'red' : 'grey', 
+                              }"  /> 
+                            
+                          
                       </MDTabStripItem>
                       <MDTabStripItem class="special">
                           <Image src="res://profile" class="fas"></Image>
+                          <Label text="Cá nhân" textWrap="true" />
                       </MDTabStripItem>
                   </MDTabStrip>
 
@@ -37,7 +42,7 @@
                       <Home />
                   </MDTabContentItem>
                   <MDTabContentItem>
-                      <Setting />
+                      <Bells />
                   </MDTabContentItem>
                   <MDTabContentItem>
                       
@@ -52,7 +57,7 @@
 <script>
 import Home from "../components/Home.vue"
 import Profile from "../components/Profile.vue"
-import Setting from "../components/Setting.vue"
+import Bells from "../components/Bells.vue"
 import CreatePost from "../components/CreatePost.vue"
 import EditProfile from "../components/EditProfile.vue"
 
@@ -60,13 +65,21 @@ import { mapGetters, mapMutations } from "vuex"
 
 export default { 
   created() {
-    this.$store.dispatch("getPosts")
+    
+     setInterval(() => {
+        console.log("Realtiming .........................");
+          this.$store.dispatch("getPosts")
+         
+      }, 5000);
   },
   components: {
-    Home, Profile, Setting
+    Home, Profile, Bells
   },
   computed: {
-    ...mapGetters(["user", "posts"])
+    ...mapGetters(["user", "posts", "bells"]),
+    numBells() {
+      return this.bells.filter(bell => bell.seen == '0').reduce((a, b) => a + 1, 0)
+    }
   },
   methods: {
     ...mapMutations(["setLogout"]),
@@ -93,10 +106,7 @@ export default {
     
   }),
   mounted() {
-      setInterval(() => {
-        console.log("Realtiming .........................");
-          this.$store.dispatch("getPosts")
-      }, 5000); 
+      
   }
 }
 </script>

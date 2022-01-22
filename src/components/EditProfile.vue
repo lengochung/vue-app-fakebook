@@ -111,9 +111,10 @@ export default {
             "Tên hiển thị": ["uname", inputType.text, 2, 20],
             "Biệt danh": ["nickname", inputType.text, 5, 30],
             "Số điện thoại": ["phone", inputType.phone, 10, 11],
+            "Giới tính": ["gender", inputType.text, 2, 5],
             "... Thôi": false
         },
-        promptInitInfo: (msg, defaultText, inputType) => ({
+        promptInfoInit: (msg, defaultText, inputType) => ({
             message: msg,
             defaultText: defaultText,
             okButtonText: "OK",
@@ -126,7 +127,7 @@ export default {
         
     },
     methods: {
-         ...mapMutations(["setPassword", "setImage", "uname", "nickname", "phone"]),
+         ...mapMutations(["setPassword", "setImage", "uname", "nickname", "phone", "gender"]),
         alertMessage: message => Dialogs.alert({ message }),
         confirmNewPassword(loginInit) {
             Dialogs.login(loginInit)
@@ -214,7 +215,7 @@ export default {
                                 });
                         } else {
                             this.promptInfo(
-                                this.promptInitInfo("Thông tin này cần " + field[2] + "-" + field[3] + " ký tự", rs.text, field[1]),
+                                this.promptInfoInit("Thông tin này cần " + field[2] + "-" + field[3] + " ký tự", rs.text, field[1]),
                                 field
                             )
                         }
@@ -225,12 +226,12 @@ export default {
             Dialogs.action({
                 title: "Chọn thông tin muốn thay đổi",
                 cancelButtonText: "... Thôi",
-                actions: ["Tên hiển thị", "Biệt danh", "Số điện thoại"]
+                actions: ["Tên hiển thị", "Biệt danh", "Số điện thoại", "Giới tính"]
             }).then((rs) => {
                 let field = this.actionList[rs]
                 if(field) {
                     this.promptInfo(
-                        this.promptInitInfo(rs, this.user[field[0]], field[1]),
+                        this.promptInfoInit(rs, this.user[field[0]], field[1]),
                         field
                     )
                 }

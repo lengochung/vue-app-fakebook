@@ -102,53 +102,53 @@ export default {
     },
     methods: {
         selectPicture() {
-        this.onloadImg = false;
-        const context = imagepicker.create({ mode: "single" });
-        context
-            .authorize()
-            .then(() => context.present())
-            .then((selection) => {
-            selection.forEach((selected) => {
-                ImageSource.fromAsset(selected).then((imgSrc) => {
-                    this.value = selected.android;
-                    this.base64_code = imgSrc.resize(500).toBase64String("png" | "jpg" | "jpeg"); //Save tmp file
+          this.onloadImg = false;
+          const context = imagepicker.create({ mode: "single" });
+          context
+              .authorize()
+              .then(() => context.present())
+              .then((selection) => {
+                selection.forEach((selected) => {
+                    ImageSource.fromAsset(selected).then((imgSrc) => {
+                        this.value = selected.android;
+                        this.base64_code = imgSrc.resize(500).toBase64String("png" | "jpg" | "jpeg"); //Save tmp file
+                    });
                 });
-            });
-            });
+              });
         },
         
         submitPost() {
-        if (this.textInput !== "") {
-            this.busy = true;
+          if (this.textInput !== "") {
+              this.busy = true;
 
-            this.filename = Math.floor(Math.random() * 100000 + 10000);
+              this.filename = Math.floor(Math.random() * 100000 + 10000);
 
-            let formData = new FormData();
-            formData.append("filename", this.filename);
-            formData.append("file", this.base64_code);
+              let formData = new FormData();
+              formData.append("filename", this.filename);
+              formData.append("file", this.base64_code);
 
-            console.log("Running");
-            // Upload image first then insert Post
-            fetch(config.PATH_API_UPLOAD_IMG, {
-                method: "POST",
-                body: formData,
-            })
-            .then((rs) => rs.json())
-            .then((rs) => {
-                // Insert Post when upload image done
-                DB.load("posts")
-                    .insert(this.user.uid, this.textInput, this.filename + ".png")
-                    .then((rs) => {
-                        this.$navigateBack();
-                    })
-                    .catch((err) => {
-                        this.busy = false;
-                        Dialogs.alert("Đăng bài thất bại");
-                    });
-            })
-            .catch((err) => { this.onloadImg = true });
-            
-        }
+              console.log("Running");
+              // Upload image first then insert Post
+              fetch(config.PATH_API_UPLOAD_IMG, {
+                  method: "POST",
+                  body: formData,
+              })
+              .then((rs) => rs.json())
+              .then((rs) => {
+                  // Insert Post when upload image done
+                  DB.load("posts")
+                      .insert(this.user.uid, this.textInput, this.filename + ".png")
+                      .then((rs) => {
+                          this.$navigateBack();
+                      })
+                      .catch((err) => {
+                          this.busy = false;
+                          Dialogs.alert("Đăng bài thất bại");
+                      });
+              })
+              .catch((err) => { this.onloadImg = true });
+              
+          }
         },
     },
     data: () => ({

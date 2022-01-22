@@ -27,7 +27,11 @@ const modulePosts = {
                     // call mutations set posts
                     if(getters.posts != posts)
                         commit("setPosts", posts) 
-                
+                    commit("setBells", rs.result.bells.filter(bell => {
+                        bell.actionTime = helper.posts.formatDate(bell.actionTime)
+                        bell.whoimage = helper.posts.formatUrlImage(bell.whoimage)
+                        return bell.uid == getters.user.uid && bell.whoname != getters.user.uname
+                    }))
                 } else
                     return Promise.reject()
             }).catch((err) => {

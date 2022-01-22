@@ -165,7 +165,7 @@ export default {
     data: () => ({
         post: {},
         textComment: "",
-        heightScroll: '92%',
+        heightScroll: '90%',
         hiddenLikes: true
     }),
     methods: {
@@ -183,7 +183,7 @@ export default {
             this.heightScroll = '85%'
         },
         upHeightScroll() {
-            this.heightScroll = '92%'
+            this.heightScroll = '90%'
         },
         hiddenlistLikes() {
             this.upHeightScroll()

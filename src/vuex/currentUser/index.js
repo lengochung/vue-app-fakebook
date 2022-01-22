@@ -38,6 +38,9 @@ const currentUser = {
         phone(state, phone) {
             state.user.phone = phone
         },
+        gender(state, gender) {
+            state.user.gender = gender
+        }
     }
 }
 

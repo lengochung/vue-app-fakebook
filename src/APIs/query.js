@@ -6,6 +6,10 @@ class Query extends Database {
         let sql = `SELECT * FROM ${this.table}`;
         return this.fetchAll(sql);
     }
+    getWhere(col, value) { // hàm này lấy tất cả dữ liệu trong bảng
+        let sql = `SELECT * FROM ${this.table} where ${col} = '${value}'`;
+        return this.fetchAll(sql);
+    }
     getRef(table, fkey) { // hàm này lấy tất cả dữ liệu trong bảng
         let sql = `SELECT * FROM ${this.table} a, ${table} b where a.${fkey} = b.${fkey}`;
         return this.fetchAll(sql);
