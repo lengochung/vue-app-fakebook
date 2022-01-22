@@ -26,8 +26,8 @@
                 <!--  -->
                 <StackLayout v-for="bell in bells" :key="bell.bid" dock="top"
                     :style="{
-                        borderRadius: '20px',
-                        background: bell.seen == '0' ? 'rgb(236, 236, 253)' : 'rgb(250, 250, 252)',
+                        
+                        background: bell.seen == '0' ? 'rgb(236, 236, 253)' : 'white',
                         padding: '30px',
                         margin: '10px' 
                     }"
