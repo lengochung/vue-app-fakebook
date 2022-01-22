@@ -14,7 +14,7 @@
                     margin: '30px 10px 0 10px'
                   }"
                 >
-                    <Label text="Lịch sử thông báo" row="0" col="0"
+                    <Label text="Thông báo" row="0" col="0"
                       style="font-weight: bold; font-size: 18px;" 
                       textWrap="true" />
                     <Label text="Đã xem hết" textWrap="true" row="0" col="1"
@@ -31,7 +31,7 @@
                         padding: '30px',
                         margin: '10px' 
                     }"
-                    @tap="goPost(bell.pid)"
+                    @tap="goPost(bell)"
                   >
                       <GridLayout rows="*" columns="auto, *, auto">
                           <Image row="0" col="0"
@@ -75,13 +75,22 @@ export default {
                 Dialogs.alert({ message: "Vui lòng kiểm tra kết nôi Wifi" })
               });
         },
-          goPost(pid) {
-              this.$navigateTo(PostDetail, { 
-                  props: { pid },
-                  transition: {
-                      name: "slideLeft", duration: 300, curve: "easeIn" 
-                  }
-              })
+          goPost(bell) {
+            DB.load("bells").deleteWhere(
+                // "seen", 1, 
+                // "uid", this.user.uid,
+                // "pid", bell.pid,
+                // "whoname", bell.whoname
+                "bid", bell.bid
+              ).then(rs => {
+                  this.$navigateTo(PostDetail, { 
+                      props: { pid: bell.pid },
+                      transition: {
+                          name: "slideLeft", duration: 300, curve: "easeIn" 
+                      }
+                  })
+              }).catch(err => Dialogs.alert({ message: "Kiểm tra kết nối Wifi" }))
+              
           },
     },
     data: () => ({

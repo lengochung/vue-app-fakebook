@@ -30,6 +30,12 @@ const tables = {
             let sql = `insert into ${this.table} values(null, '${uid}', '${pid}', '${whoname}', '${action}', '${whoimage}', '', null)`
             return this.none(sql)
         }
+    },
+    messenger: class extends Query {
+        constructor(table) {
+            super()
+            this.table = table
+        }
     }
 }
 

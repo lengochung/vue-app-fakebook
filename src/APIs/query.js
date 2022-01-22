@@ -6,7 +6,7 @@ class Query extends Database {
         let sql = `SELECT * FROM ${this.table}`;
         return this.fetchAll(sql);
     }
-    getWhere(col, value) { // hàm này lấy tất cả dữ liệu trong bảng
+    getWhere(col, value) { // hàm này lấy where dữ liệu trong bảng
         let sql = `SELECT * FROM ${this.table} where ${col} = '${value}'`;
         return this.fetchAll(sql);
     }
@@ -18,14 +18,6 @@ class Query extends Database {
         let sql = `SELECT * FROM ${this.table} a, ${table} b where a.${fkey} = b.${fkey} order by ${sort} ${type}`;
         return this.fetchAll(sql);
     }
-    insert(...rest) {
-        let sql = `INSERT into ${this.table} values(`
-        rest.forEach(value => {
-            sql += `${value},`
-        })
-        sql = sql.substr(0, sql.length - 1) + `)`
-        return this.none(sql)
-    }
     deleteWhere(col,value){ // hàm này delete có 1 điều kiện và không trả về giá trị
         let sql = `DELETE FROM ${this.table} WHERE ${col} = '${value}'`;
         return this.none(sql);
@@ -34,8 +26,16 @@ class Query extends Database {
         let sql = `DELETE FROM ${this.table} WHERE ${col1} = '${value1}' and ${col2} = '${value2}'`;
         return this.none(sql);
     }
+    deleteTlWhere(col1, value1, col2, value2, col3, value3){ // hàm này delete có 1 điều kiện và không trả về giá trị
+        let sql = `DELETE FROM ${this.table} WHERE ${col1} = '${value1}' and ${col2} = '${value2}' and ${col3} = '${value3}'`;
+        return this.none(sql);
+    }
     updateWhere(set, valueSet, col, value) {
         let sql = `UPDATE ${this.table} set ${set} = '${valueSet}' where ${col} = '${value}'`
+        return this.none(sql)
+    }
+    updateTlWhere(set, valueSet, col1, value1, col2, value2, col3, value3) {
+        let sql = `UPDATE ${this.table} set ${set} = '${valueSet}' where ${col1} = '${value1}' and ${col2} = '${value2}' and ${col3} = '${value3}'`
         return this.none(sql)
     }
 }
