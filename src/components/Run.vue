@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { LocalNotifications } from "nativescript-local-notifications";
 
 import { mapGetters, mapMutations } from 'vuex'
 import Login from "../pages/login.vue"

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { LocalNotifications } from 'nativescript-local-notifications'
+import { LocalNotifications } from "@nativescript/local-notifications";
 import { loginFromResponseNofPost } from "../notifications/on-handle-nof-not-run"
 import { mapMutations } from 'vuex'
 import nof from '../notifications'

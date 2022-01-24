@@ -14,7 +14,7 @@
 <script>
   
 
-  import { LocalNotifications } from "nativescript-local-notifications";
+import { LocalNotifications } from "@nativescript/local-notifications";
   import nof from "../notifications"
  
 

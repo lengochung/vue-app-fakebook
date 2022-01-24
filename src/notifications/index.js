@@ -1,5 +1,5 @@
 import { Color } from "@nativescript/core/color";
-import { LocalNotifications } from "nativescript-local-notifications";
+import { LocalNotifications } from "@nativescript/local-notifications";
 import { Dialogs } from '@nativescript/core';
 
 const nof = {
