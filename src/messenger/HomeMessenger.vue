@@ -16,8 +16,8 @@
             <!-- </StackLayout>  -->
             <ScrollView orientation="horizontal" dock="top">
                 <StackLayout orientation="horizontal">
-                    <Image  v-for="item in listChat" :key="item.uid"
-                        :src="item.image" stretch="aspectFill" class="imageChat"  />
+                    <Image  v-for="userItem in users" :key="userItem.uid"
+                        :src="userItem.image" stretch="aspectFill" class="imageChat"  /> 
                 </StackLayout>
             </ScrollView>
             <StackLayout dock="bottom">
@@ -40,7 +40,7 @@ export default {
         textSearch: ""
     }),
     computed: {
-        ...mapGetters(["messages", "listChat", "user"]),
+        ...mapGetters(["messages", "listChat", "user", "users"]),
         list() {
             if(this.textSearch=="") {
                 return this.listChat
@@ -59,7 +59,7 @@ export default {
             console.log(this.listChat, this.messages);
         },
         onClear() {
-            console.log("Clear ....................................", this.textSearch);
+            console.log("Clear ........", this.textSearch);
         },
         onSubmit() {
             console.log("Submit search ------------------", this.textSearch);

@@ -41,6 +41,9 @@ const tables = {
             const target = "messages.php?table=" + this.table
             return this.XmlHResquest(target)
         }
+        create() {
+            
+        }
     }
 }
 
