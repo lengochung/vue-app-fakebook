@@ -81,7 +81,7 @@ export default {
      setInterval(() => {
         console.log("Realtiming .........................");
           this.$store.dispatch("getPosts")
-          this.$store.dispatch("getMessages")
+          this.$store.dispatch("getMessages") 
 
       }, 5000);
   },

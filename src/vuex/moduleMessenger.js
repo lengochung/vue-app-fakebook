@@ -19,6 +19,7 @@ const moduleMessenger = {
             DB.messenger(getters.user.username)
                 .getMessages()
                 .then(rs => {
+                    console.log("mesage realtime"); 
                     let messages = rs.result.messages
                     let list = rs.result.list
                     // 

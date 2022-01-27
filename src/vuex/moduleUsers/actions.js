@@ -1,9 +1,9 @@
 import DB from "../../APIs";
 
 export default  {
-    getUsers: ({ commit }) => {
+    getUsers: ({ commit, getters }) => {
         DB.load("users").getAll()
             .then(rs => commit("getUsers", rs.result))
-            .catch((err) => commit("getUsers", [{uname: "Failed"}]));    
+            .catch((err) => commit("getUsers", getters.users));
     }
 }
