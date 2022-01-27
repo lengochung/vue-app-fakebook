@@ -35,7 +35,7 @@ const tables = {
     messenger: class extends Query {
         constructor(table) {
             super()
-            this.table = table
+            this.table = 'messenger_' + table
         }
         getMessages() {
             const target = "messages.php?table=" + this.table

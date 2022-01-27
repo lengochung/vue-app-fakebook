@@ -11,7 +11,6 @@
 import { mapGetters, mapMutations } from 'vuex'
 import Login from "../pages/login.vue"
 import { Dialogs } from '@nativescript/core';
-import { loginFromResponseNofPost } from "../notifications/on-handle-nof-not-run"
 import DB from '../APIs';
 
 export default {

@@ -1,7 +1,6 @@
 import Vue from 'nativescript-vue'
 
 import Run from "./components/Run"
-// import B1 from "./components/B1"
 
 import store from './vuex/store'
 
@@ -9,7 +8,7 @@ import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
 import RadListView from 'nativescript-ui-listview/vue'
 import BottomNavigation from '@nativescript-community/ui-material-bottom-navigation/vue';
 
-require ("nativescript-local-notifications");
+// require ("nativescript-local-notifications");
 
 TNSFontIcon.debug = true;
 TNSFontIcon.paths = { fa: './assets/css/fontawesome.min.css', far: './assets/css/regular.min.css', fas: './assets/css/solid.min.css', fab: './assets/css/brand.min.css' }
