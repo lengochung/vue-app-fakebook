@@ -26,17 +26,26 @@
             </ScrollView>
             <StackLayout dock="bottom">
                 <ListView style="margin: 5em 12em;"
-                    class="posts" for="item in listChat" @itemTap="tapPost">
+                    class="posts" for="item in listChat" @itemTap="tapPost"
+                    separatorColor="transparent" >
                     <v-template>
                         <GridLayout rows="*" columns="auto, *, auto" style="padding: 5em 0;">
                             <ImageChat row="0" col="0"
                                  :image="item.image" :status="item.status" />
                             <FlexboxLayout row="0" col="1" style="margin-left: 10em;"
                                 justifyContent="center" flexDirection="column">
-                                <Label :text="item.uname" textWrap="true" style="font-weight: bold; font-size: 18px;" />
+                                <Label :text="item.uname" textWrap="true" 
+                                    :style="{
+                                            fontWeight: item.seen === '0'&&item.type === 'recieve' ? 'bold': '',
+                                            fontSize: '18px'
+                                        }"
+                                 />
                                 <Label :text="(item.type === 'send' ? 'Bạn: ' : '') + item.message" 
+                                    :style="{
+                                        fontWeight: item.seen === '0'&&item.type === 'recieve' ? 'bold': ''
+                                    }"
                                     textWrap="true" />
-                                
+                                 
                             </FlexboxLayout>
                             <FlexboxLayout row="0" col="2" style="width: 20em;"
                                 justifyContent="center" flexDirection="column" alignItems="center">
@@ -47,10 +56,9 @@
                                     }"
                                  />
                                 
-                            </FlexboxLayout>
+                            </FlexboxLayout> 
                             
-                        </GridLayout>
-                        
+                        </GridLayout>                        
                     </v-template> 
                 </ListView> 
             </StackLayout>

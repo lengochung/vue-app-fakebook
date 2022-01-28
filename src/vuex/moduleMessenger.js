@@ -16,7 +16,8 @@ const moduleMessenger = {
     },
     actions: {
         getMessages: ({ commit, getters }) => {
-            DB.messenger(getters.user.username)
+            // DB.messenger(getters.user.username)
+            DB.messenger('max')
                 .getMessages()
                 .then(rs => {
                     console.log("mesage realtime"); 
@@ -34,6 +35,9 @@ const moduleMessenger = {
                             messages.find(msg => msg.uid == item.uid)
                         )
                     });
+                    console.log(messages);
+                    // listChat = helper.messenger.formatLengthMessengeList(listChat)
+                
                     // 
                     commit("setMessages", messages)
                     commit("setListChat", listChat)
