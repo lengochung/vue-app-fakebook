@@ -5,6 +5,17 @@ const messenger = {
                 item.message = item.message.substring(0, 24) + " ..."
         })
         return list
+    },
+    formatHiddenImage(list = []) {
+        for (let i = 1; i < list.length; i++) {
+            if(list[i].type === 'recieve') {
+                if(list[i-1].type === 'recieve') {
+                    list[i-1].image = ''
+                }
+            }
+            
+        }
+        return list
     }
 }
 

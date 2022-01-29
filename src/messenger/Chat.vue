@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar title="dlskfh" icon="">
+        <ActionBar :title="userItem.uname" icon="">
           <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="goBack" />
           <ActionItem icon="" text="Left" android.systemIcon="ic_menu_camera" ios.position="left" @tap="" />
           <ActionItem icon="" text="Right" android.systemIcon="ic_menu_search" ios.position="right" @tap="" />
@@ -10,13 +10,13 @@
             <FlexboxLayout flexDirection="column-reverse" 
                 class="containerChat" @tap="blurTextField">
                 <!-- Seen -->
-                <GridLayout
+                <!-- <GridLayout
                      rows="*" columns="*, auto" style="height: 20em;">
                     <Image src="~/assets/images/hung.png" row="0" col="1"
                          class="iconSeen" stretch="aspectFill" /> 
-                </GridLayout>
+                </GridLayout> -->
                 <!-- Messages -->
-                <ListView for="item in messages" separatorColor="transparent">
+                <ListView for="item in list" separatorColor="transparent">
                     <v-template>
                         <StackLayout > 
                             <!-- recieve -->
@@ -59,8 +59,9 @@
                     <Image src="res://uploadimg" class="iconMessenger" row="0" col="0" stretch="aspectFit" />
                     
                     <TextField row="0" col="1"
+                        v-model="textMessage"
                         ref="text" hint="Viết tin nhắn" text="" />
-                    <Image src="res://send" @tap="onItemTap"
+                    <Image src="res://send" @tap="send"
                          class="iconMessenger"   row="0" col="2" stretch="aspectFit" />
                 </GridLayout>
                 
@@ -73,23 +74,24 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import DB from '../APIs'
+import helper from "../helpers"
 
 export default {
     created() {
-        // setInterval(() => {
-            this.$store.dispatch("getMessages")
-        // }, 1000);
         
-    },
+    }, 
+    props: ["userItem"],
     data: () => ({
-        arr: [
-            {
-                a: "HUNG"
-            }
-        ]
+        textMessage: "",
+        photo: ''
     }),
     computed: {
-        ...mapGetters(["messages"])
+        ...mapGetters(["messages", 'user']),
+        list() {
+            let arr = this.messages.filter(msg => msg.uid === this.userItem.uid)
+            return helper.messenger.formatHiddenImage(arr).reverse()
+        }
     },
     methods: {
         onItemTap() {
@@ -98,6 +100,23 @@ export default {
         blurTextField() {
             this.$refs.text.nativeView.isEnabled = false
             this.$refs.text.nativeView.isEnabled = true
+        },
+        goBack() {
+            this.$navigateBack()
+        },
+        send() {
+            this.$refs.text.nativeView.isEnabled = false
+            DB.messenger(this.user.username)
+                .insert(this.userItem, this.textMessage, this.photo, 'send')
+                .then(rs => {
+                    DB.messenger(this.userItem.username)
+                        .insert(this.user, this.textMessage, this.photo, 'recieve')
+                        .then(rs => {
+                            this.$refs.text.nativeView.isEnabled = true
+                            this.textMessage = this.photo = ""  
+                            console.log(this.userItem);
+                        })
+                })
         }
     },
 }
@@ -132,7 +151,7 @@ export default {
         /* color: white; */
     }
     .containerChat {
-        height: 92%; 
+        height: 90%; 
         padding: 10em 10em;
     }
     .messageLeft {

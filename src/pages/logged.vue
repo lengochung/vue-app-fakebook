@@ -78,12 +78,12 @@ import { mapGetters, mapMutations } from "vuex"
 export default { 
   created() {
     
-     setInterval(() => {
+    //  setInterval(() => {
         console.log("Realtiming .........................");
           this.$store.dispatch("getPosts")
           this.$store.dispatch("getMessages") 
 
-      }, 5000);
+      // }, 5000);
   },
   components: {
     Home, Profile, Bells

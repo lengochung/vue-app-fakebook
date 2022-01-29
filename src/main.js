@@ -1,7 +1,7 @@
 import Vue from 'nativescript-vue'
 
 import Run from "./components/Run"
-import Demo from "./components/Demo"
+// import Demo from "./components/Demo"
 
 import store from './vuex/store'
 
@@ -30,5 +30,5 @@ Vue.use(BottomNavigation);
 
 new Vue({
   store,
-  render: h => h('frame', [h(Demo)])
+  render: h => h('frame', [h(Run)])
 }).$start();

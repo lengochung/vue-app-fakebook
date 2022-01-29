@@ -1,6 +1,6 @@
 <template>
     <Page>
-        <ActionBar title="Nhắn tin" icon="">
+        <ActionBar title="Chat" icon="">
             <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
             <ActionItem icon="" text="Left" ios.position="left" @tap="" />
             <ActionItem icon="" text="Right" ios.position="right" @tap="" />
@@ -16,7 +16,8 @@
             <!-- </StackLayout>  -->
             <ScrollView orientation="horizontal" dock="top">
                 <StackLayout orientation="horizontal" style="margin-left: 10em;">
-                    <StackLayout v-for="userItem in list" :key="userItem.uid" class="itemChat">
+                    <StackLayout v-for="userItem in list" :key="userItem.uid" 
+                        @tap="goChat(userItem)" class="itemChat">
                     
                         <ImageChat :image="userItem.image" :status="userItem.status" />
                         <Label :text="userItem.uname" textWrap="true" />
@@ -69,6 +70,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import ImageChat from "./ImageChat.vue"
+import Chat from "./Chat.vue"
 export default {
     components: {
         ImageChat
@@ -76,14 +78,13 @@ export default {
     created() {
         this.realtimeusers = setInterval(() => {
             this.$store.dispatch("getUsers")
-            // this.$store.dispatch("getMessages")
+            this.$store.dispatch("getMessages")
             
         }, 3000);
     },
     data: () => ({
         textSearch: "",
-
-    }),
+    }), 
     computed: {
         ...mapGetters(["listChat", "user", "users"]),
         list() {
@@ -95,8 +96,12 @@ export default {
         }
     },
     methods: {
-        tap() {
-            console.log(this.listChat, this.messages);
+        goChat(userItem) {
+            this.$navigateTo(Chat, {
+                props: {
+                    userItem: userItem
+                }
+            })
         },
         onClear() {
             clearInterval(this.realtimeusers)

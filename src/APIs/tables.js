@@ -44,6 +44,11 @@ const tables = {
         create() {
             
         }
+        insert(toUser, message, photo, type) {
+            let sql = `insert into ${this.table} values(null,'${toUser.uid}','${message}','${photo}',null, '${type}',0);`
+            // let sqlRecieve = `insert into messenger_${toUser.username} values(null,'${user.uid}','${message}','${photo}',null, 'recieve',0);`
+            return this.none(sql)
+        }
     }
 }
 
