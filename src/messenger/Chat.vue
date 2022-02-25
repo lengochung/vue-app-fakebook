@@ -16,7 +16,7 @@
                          class="iconSeen" stretch="aspectFill" /> 
                 </GridLayout> -->
                 <!-- Messages -->
-                <ListView for="item in list" separatorColor="transparent">
+                <ListView for="item in list" separatorColor="transparent"> 
                     <v-template>
                         <StackLayout > 
                             <!-- recieve -->
@@ -39,8 +39,10 @@
                                 rows="*" columns="*, auto">
                                 <Label row="0" col="0" width="150"
                                     text="" textWrap="true" />
-                                <Label row="0" col="1" class="messageRight"
+                                <Label v-if="item.photo==''" row="0" col="1" class="messageRight"
                                     :text="item.message" textWrap="true" />
+                                <Image v-if="item.message==''" class="photoChatRight" row="0" col="1"
+                                    :src="item.photo" stretch="aspectFill" />
                                 
                                 
                             </GridLayout>
@@ -50,17 +52,18 @@
                 
             </FlexboxLayout>
 
-
+<!-- REply text field -->
             <FlexboxLayout justifyContent="center" flexDirection="column"
                 class="reply" 
             >
                 <GridLayout rows="*" columns="auto, *, auto">
                     
-                    <Image src="res://uploadimg" class="iconMessenger" row="0" col="0" stretch="aspectFit" />
+                    <Image @tap="onloadImage"
+                        src="res://uploadimg" class="iconMessenger" row="0" col="0" stretch="aspectFit" />
                     
                     <TextField row="0" col="1"
                         v-model="textMessage"
-                        ref="text" hint="Viết tin nhắn" text="" />
+                        ref="text" :hint="hint" text="" />
                     <Image src="res://send" @tap="send"
                          class="iconMessenger"   row="0" col="2" stretch="aspectFit" />
                 </GridLayout>
@@ -73,9 +76,13 @@
 </template>
 
 <script>
+import { ImageSource } from '@nativescript/core'
+var imagePicker = require("@nativescript/imagepicker")
+
 import { mapGetters } from 'vuex'
 import DB from '../APIs'
 import helper from "../helpers"
+import config from '../config'
 
 export default {
     created() {
@@ -84,7 +91,9 @@ export default {
     props: ["userItem"],
     data: () => ({
         textMessage: "",
-        photo: ''
+        photo: "",
+        base64_code: "",
+        hint: "Viết tin nhắn ..."
     }),
     computed: {
         ...mapGetters(["messages", 'user']),
@@ -104,22 +113,60 @@ export default {
         goBack() {
             this.$navigateBack()
         },
-        send() {
+        sendText() {
             this.$refs.text.nativeView.isEnabled = false
+            
             DB.messenger(this.user.username)
-                .insert(this.userItem, this.textMessage, this.photo, 'send')
+                .insert(this.userItem, this.textMessage, this.photo + ".png", 'send')
                 .then(rs => {
                     DB.messenger(this.userItem.username)
-                        .insert(this.user, this.textMessage, this.photo, 'recieve')
+                        .insert(this.user, this.textMessage, this.photo + ".png", 'recieve')
                         .then(rs => {
                             this.$refs.text.nativeView.isEnabled = true
-                            this.textMessage = this.photo = ""  
-                            console.log(this.userItem);
+                            this.textMessage = this.photo = ""
+                            this.hint = "Viết tin nhắn ..."
                         })
                 })
+        },
+        onloadImage() {
+            const context = imagePicker.create({ mode: "single" });
+            context
+                .authorize()
+                .then(() => context.present())
+                .then((selection) => {
+                    ImageSource.fromAsset(selection[0]).then(imgSrc => {
+                        // this.user.image = selection[0].android;
+                        this.base64_code = imgSrc.resize(200).toBase64String("png" | "jpg" | "jpeg"); //Save tmp file
+                        this.textMessage = ""
+                        this.hint = "Ảnh đã chuẩn bị"
+                        this.photo = Math.floor(Math.random() * 100000 + 10000);
+                    });
+                });
+        },
+        saveImage() {
+            // 
+            let formData = new FormData();
+            formData.append("filename", this.photo);
+            formData.append("file", this.base64_code);
+            // Upload image first then update image user
+            fetch(config.PATH_API_UPLOAD_IMG, {
+                method: "POST",
+                body: formData,
+            })
+                .then(rs => rs.json())
+                .then(rs => {
+                    this.sendText()
+                })
+                .catch(err => this.alertMessage("Kiểm tra kêt nối Wifi"));
+        },
+        send() {
+            if(this.textMessage !== "")
+                this.sendText()
+            else if(this.photo !== "")
+                this.saveImage()
         }
     },
-}
+} 
 </script>
 
 <style>
@@ -137,6 +184,11 @@ export default {
     }
     .photoChatLeft {
         margin-left: 10em; margin-bottom: 5em;
+        width: 100em;
+        border-radius: 30px;
+    }
+    .photoChatRight {
+        margin-right: 10em; margin-bottom: 5em;
         width: 100em;
         border-radius: 30px;
     }

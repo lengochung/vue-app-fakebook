@@ -2,8 +2,8 @@
     <Page>
         <ActionBar title="Chat" icon="">
             <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
-            <ActionItem icon="" text="Left" ios.position="left" @tap="" />
-            <ActionItem icon="" text="Right" ios.position="right" @tap="" />
+            <!-- <ActionItem icon="" text="Left" ios.position="left" @tap="" />
+            <ActionItem icon="" text="Right" ios.position="right" @tap="" /> -->
         </ActionBar>
          <DockLayout stretchLastChild="true" >
             <!-- <StackLayout dock="top"> -->
@@ -21,6 +21,13 @@
                     
                         <ImageChat :image="userItem.image" :status="userItem.status" />
                         <Label :text="userItem.uname" textWrap="true" />
+                        
+                    </StackLayout>
+                    <StackLayout>
+                        <Label :style="{
+                                    margin: '20em auto'
+                                }"
+                            :text="list.length === 0 ? 'Không có kết quả tìm kiếm' : ''" textWrap="true" />
                         
                     </StackLayout>
                 </StackLayout>
@@ -88,15 +95,19 @@ export default {
     computed: {
         ...mapGetters(["listChat", "user", "users"]),
         list() {
+            let listOutput = []
             if(this.textSearch!=="")
-                return this.users.filter(
-                            user => user.uname.toLowerCase().indexOf(this.textSearch) > -1
-                        ).sort(this.compare)
-            return this.users.sort(this.compare)
+                listOutput = this.users.filter(
+                    user => user.uname.toLowerCase().indexOf(this.textSearch.trim().toLowerCase()) > -1
+                )
+            else
+                listOutput = this.users
+            // 
+            return listOutput.sort(this.compare).filter(user => user.uid !== this.user.uid)
         }
     },
     methods: {
-        goChat(userItem) {
+        goChat(userItem) { 
             this.$navigateTo(Chat, {
                 props: {
                     userItem: userItem
@@ -104,7 +115,7 @@ export default {
             })
         },
         onClear() {
-            clearInterval(this.realtimeusers)
+            // clearInterval(this.realtimeusers)
         },
         onSubmit() {
             console.log("Submit search ------------------", this.textSearch);

@@ -18,7 +18,7 @@
             <Image src="res://createpost" stretch="aspectFill" class="avatarUser"/>    
         </ActionItem>
         <Actionitem @tap="messenger">
-            <Label class="messenger" text="3" textWrap="true" />
+            <Label class="messenger" :text="nofChat === 0 ? '' : nofChat" textWrap="true" />
             
         </Actionitem>
         <ActionItem icon="" text="Chỉnh sửa tài khoản" android.position="popup" @tap="goEditProfile" />
@@ -89,9 +89,12 @@ export default {
     Home, Profile, Bells
   },
   computed: {
-    ...mapGetters(["user", "posts", "bells"]),
+    ...mapGetters(["user", "posts", "bells", "listChat"]),
     numBells() {
       return this.bells.filter(bell => bell.seen == '0').reduce((a, b) => a + 1, 0)
+    },
+    nofChat() {
+      return this.listChat.filter(i => i.seen === "0"&&i.type === "recieve").length
     }
   },
   methods: {
