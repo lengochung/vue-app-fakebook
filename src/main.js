@@ -1,7 +1,6 @@
 import Vue from 'nativescript-vue'
 
 import Run from "./components/Run"
-import Demo from "./demo/demo"
 
 import store from './vuex/store'
 

@@ -63,7 +63,7 @@ export default {
     }),
     methods: {
       ...mapMutations(["setLogin"]),
-      loginHandle: methods.loginHandle
+      loginHandle: methods.loginHandle 
     },
     mounted() {
        
