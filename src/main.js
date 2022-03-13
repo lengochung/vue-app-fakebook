@@ -7,20 +7,24 @@ import store from './vuex/store'
 import { TNSFontIcon, fonticon } from 'nativescript-fonticon'
 import RadListView from 'nativescript-ui-listview/vue'
 import BottomNavigation from '@nativescript-community/ui-material-bottom-navigation/vue';
+import { registerElement } from "nativescript-vue";
 
-// require ("nativescript-local-notifications");
+// import {Gradient } from "nativescript-gradient"
+
+// registerElement("Gradient", () => require("nativescript-gradient").Gradient);
+
 
 TNSFontIcon.debug = true;
 TNSFontIcon.paths = { fa: './assets/css/fontawesome.min.css', far: './assets/css/regular.min.css', fas: './assets/css/solid.min.css', fab: './assets/css/brand.min.css' }
 TNSFontIcon.loadCss() 
-Vue.filter('fonticon', fonticon) 
+Vue.filter('fonticon', fonticon)
 
 // Prints Vue logs when --env.production is *NOT* set while building
 
 // Vue.config.silent = (TNS_ENV === 'production')
 Vue.config.silent = false
 // Vue.config.devtools = true
-
+// Vue.use(Gradient)
 Vue.use(RadListView)
 Vue.use(BottomNavigation);
 
