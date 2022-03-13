@@ -35,7 +35,6 @@
           <Button text="Go" @tap="loginHandle"
             :hidden="inputText.user.length > 0 && inputText.password.length > 0 ? false : true"
           />
-          <Button :text="demof" @tap="demo" />
           
           
         </StackLayout>
@@ -64,8 +63,7 @@ export default {
     }),
     methods: {
       ...mapMutations(["setLogin"]),
-      loginHandle: methods.loginHandle,
-      demo: nof.demo
+      loginHandle: methods.loginHandle
     },
     mounted() {
        
