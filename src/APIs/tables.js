@@ -28,7 +28,7 @@ const tables = {
     bells: class extends Query {
         table = "bells";
         insert (uid, pid, whoname, action, whoimage) {
-            let sql = `insert into ${this.table} values(null, '${uid}', '${pid}', '${whoname}', '${action}', '${whoimage}', '', null)`
+            let sql = `insert into ${this.table} values(null, '${uid}', '${pid}', '${whoname}', '${action}', '${whoimage}', 0, null)`
             return this.none(sql)
         }
     },
@@ -45,9 +45,15 @@ const tables = {
             
         }
         insert(toUser, message, photo, type) {
+            if(photo == '.png')
+                photo = ''
             let sql = `insert into ${this.table} values(null,'${toUser.uid}','${message}','${photo}',null, '${type}',0);`
             // let sqlRecieve = `insert into messenger_${toUser.username} values(null,'${user.uid}','${message}','${photo}',null, 'recieve',0);`
             return this.none(sql)
+        }
+
+        seen(uid) {
+            return this.updateWhere('seen', 1, 'uid', uid)
         }
     }
 }

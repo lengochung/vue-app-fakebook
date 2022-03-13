@@ -34,13 +34,14 @@
             </ScrollView>
             <StackLayout dock="bottom">
                 <ListView style="margin: 5em 12em;"
-                    class="posts" for="item in listChat" @itemTap="tapPost"
+                    class="posts" for="item in listChat"
                     separatorColor="transparent" >
                     <v-template>
                         <GridLayout rows="*" columns="auto, *, auto" style="padding: 5em 0;">
-                            <ImageChat row="0" col="0"
+                            <ImageChat row="0" col="0" @tap="goChat(item)"
                                  :image="item.image" :status="item.status" />
                             <FlexboxLayout row="0" col="1" style="margin-left: 10em;"
+                                @tap="goChat(item)"
                                 justifyContent="center" flexDirection="column">
                                 <Label :text="item.uname" textWrap="true" 
                                     :style="{
@@ -50,7 +51,7 @@
                                  />
                                 <Label :text="(item.type === 'send' ? 'Bạn: ' : '') + item.message" 
                                     :style="{
-                                        fontWeight: item.seen === '0'&&item.type === 'recieve' ? 'bold': ''
+                                        fontWeight: item.seen == '0'&&item.type == 'recieve' ? 'bold': ''
                                     }"
                                     textWrap="true" />
                                  
@@ -108,6 +109,7 @@ export default {
     },
     methods: {
         goChat(userItem) { 
+            console.log(userItem);
             this.$navigateTo(Chat, {
                 props: {
                     userItem: userItem

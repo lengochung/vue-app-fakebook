@@ -78,18 +78,18 @@ import { mapGetters, mapMutations } from "vuex"
 export default { 
   created() {
     
-    //  setInterval(() => {
+     setInterval(() => {
         console.log("Realtiming .........................");
           this.$store.dispatch("getPosts")
-          this.$store.dispatch("getMessages") 
+          this.$store.dispatch("getMessages")
 
-      // }, 5000);
+      }, 5000);
   },
   components: {
     Home, Profile, Bells
   },
   computed: {
-    ...mapGetters(["user", "posts", "bells", "listChat"]),
+    ...mapGetters(["user", "posts", "bells", "listChat", 'messages']),
     numBells() {
       return this.bells.filter(bell => bell.seen == '0').reduce((a, b) => a + 1, 0)
     },
@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setLogout"]),
-    logout() {
+    logout() { 
       this.setLogout()
       this.$navigateBack()
     },
@@ -124,8 +124,8 @@ export default {
   data: () => ({
     
   }),
-  mounted() {
-      
+  mounted() { 
+    console.log(this.bells);
   }
 }
 </script>

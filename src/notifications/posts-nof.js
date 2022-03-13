@@ -46,5 +46,42 @@ const onSchedulePost = (oldPosts, newPosts, user) => {
        
     }
 }
+const onScheduleBells = (oldBells, newBells) => {
+    const length = newBells.length - oldBells.length
+    let arraySchedule = []
+    if( oldBells.length > 0 && length > 0) {
+        for (let i = 0; i < length; i++) {
+            let bell = newBells[i] 
 
-export { onSchedulePost }
+            
+            arraySchedule.push({
+                id: Math.floor(Math.random()*1000),
+                title: bell.whoname,
+                subtitle: "Thông báo",
+                body: bell.action,
+                bigTextStyle: false, // Allow more than 1 row of the 'body' text on Android, but setting this to true denies showing the 'image'
+                color: new Color("red"),
+                thumbnail: bell.whoimage,
+                forceShowWhenInForeground: true, 
+                channel: "vue-channel",
+                ticker: "Special ticker",
+                at: new Date(new Date().getTime() + (5 * 1000)), // 5 seconds from now,
+                actions: [
+                    {
+                        id: "yes",
+                        type: "button",
+                        title: "Xem ngay",
+                        launch: true,
+                    }
+                ],
+            })
+            
+        }
+        // 
+        if(arraySchedule.length > 0)
+            nof.onTapScheduleNotification(arraySchedule);
+       
+    }
+}
+
+export { onSchedulePost, onScheduleBells }

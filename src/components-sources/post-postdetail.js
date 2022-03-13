@@ -9,6 +9,14 @@ const methods = {
         this.post.likes = this.post.likes.filter(like => like.uid !== this.user.uid)
       } else {
         helper.likes.like(this.user, this.post)
+        .then((result) => {
+          // 
+          DB.load('bells').insert(
+            this.post.uid, this.post.pid, this.user.uname, 
+            'đã thích bài viết của bạn', 
+            this.user.image.split('/').reverse()[0]
+            );
+        })
         this.post.likes = [...this.post.likes, this.user]
       }
 
@@ -30,7 +38,15 @@ const methods = {
     sendComment() { 
         if(this.textComment !== "") {
             DB.load("comments").insert(this.user.uid, this.post.pid, this.textComment)
-            this.textComment = ""
+              .then((result) => {
+                DB.load('bells').insert(
+                  this.post.uid, this.post.pid, this.user.uname, 
+                  'đã bình luận về bài viết của bạn',
+                  this.user.image.split('/').reverse()[0]
+                  ).then(rs => {
+                    this.textComment = ""
+                  })
+              })
         } 
         this.upHeightScroll()
     }

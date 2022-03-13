@@ -129,17 +129,18 @@ export default {
 
               console.log("Running");
               // Upload image first then insert Post
-              fetch(config.PATH_API_UPLOAD_IMG, {
-                  method: "POST",
+              fetch(config.PATH_API_UPLOAD_IMG, { 
+                  method: "POST", 
                   body: formData,
               })
               .then((rs) => rs.json())
               .then((rs) => {
-                  // Insert Post when upload image done
+                console.log(rs);
+                  // Insert Post when upload image done 
                   DB.load("posts")
                       .insert(this.user.uid, this.textInput, this.filename + ".png")
                       .then((rs) => {
-                          this.$navigateBack();
+                          this.$navigateBack(); 
                       })
                       .catch((err) => {
                           this.busy = false;

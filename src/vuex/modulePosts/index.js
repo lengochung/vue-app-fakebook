@@ -1,7 +1,7 @@
 import { Dialogs } from "@nativescript/core";
 import DB from "../../APIs"
 import helper from "../../helpers";
-import { onSchedulePost } from "../../notifications/posts-nof";
+import { onScheduleBells, onSchedulePost } from "../../notifications/posts-nof";
 
 const modulePosts = {
     state: {
@@ -27,11 +27,14 @@ const modulePosts = {
                     // call mutations set posts
                     if(getters.posts != posts)
                         commit("setPosts", posts) 
-                    commit("setBells", rs.result.bells.filter(bell => {
+                    // 
+                    let bells = rs.result.bells.filter(bell => {
                         bell.actionTime = helper.posts.formatDate(bell.actionTime)
                         bell.whoimage = helper.posts.formatUrlImage(bell.whoimage)
                         return bell.uid == getters.user.uid && bell.whoname != getters.user.uname
-                    }))
+                    })
+                    onScheduleBells(getters.bells, bells)
+                    commit("setBells", bells)
                 } else
                     return Promise.reject()
             }).catch((err) => {

@@ -2,12 +2,14 @@
     <Page>
         <ActionBar :title="userItem.uname" icon="">
           <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="goBack" />
-          <ActionItem icon="" text="Left" android.systemIcon="ic_menu_camera" ios.position="left" @tap="" />
+          <ActionItem icon="" 
+            @tap="onItemTap"
+            text="Left" android.systemIcon="ic_menu_camera" ios.position="left" />
           <ActionItem icon="" text="Right" android.systemIcon="ic_menu_search" ios.position="right" @tap="" />
         </ActionBar>
         <StackLayout>
            
-            <FlexboxLayout flexDirection="column-reverse" 
+            <FlexboxLayout flexDirection="column-reverse"
                 class="containerChat" @tap="blurTextField">
                 <!-- Seen -->
                 <!-- <GridLayout
@@ -30,7 +32,7 @@
                                 <Image v-if="item.message==''" class="photoChatLeft" row="0" col="1"
                                     :src="item.photo" stretch="aspectFill" />
                                 
-                                <Label row="0" col="2" width="100"
+                                <Label row="0" col="2" width="100" 
                                     text="" textWrap="true" />
                         
                             </GridLayout>   
@@ -85,9 +87,7 @@ import helper from "../helpers"
 import config from '../config'
 
 export default {
-    created() {
-        
-    }, 
+     
     props: ["userItem"],
     data: () => ({
         textMessage: "",
@@ -98,29 +98,33 @@ export default {
     computed: {
         ...mapGetters(["messages", 'user']),
         list() {
-            let arr = this.messages.filter(msg => msg.uid === this.userItem.uid)
+            let arr = this.messages.filter(msg => msg.uid == this.userItem.uid)
             return helper.messenger.formatHiddenImage(arr).reverse()
         }
     },
+    mounted() {
+        this.seen = setInterval(() => {
+                DB.messenger(this.user.username).seen(this.userItem.uid)
+            }, 3000);
+    },
     methods: {
-        onItemTap() {
-            console.log(this.messages);
-        },
+        
         blurTextField() {
             this.$refs.text.nativeView.isEnabled = false
             this.$refs.text.nativeView.isEnabled = true
         },
         goBack() {
+            clearInterval(this.seen)
             this.$navigateBack()
         },
         sendText() {
             this.$refs.text.nativeView.isEnabled = false
             
             DB.messenger(this.user.username)
-                .insert(this.userItem, this.textMessage, this.photo + ".png", 'send')
+                .insert(this.userItem, this.textMessage, this.photo + '.png', 'send') 
                 .then(rs => {
                     DB.messenger(this.userItem.username)
-                        .insert(this.user, this.textMessage, this.photo + ".png", 'recieve')
+                        .insert(this.user, this.textMessage, this.photo + '.png', 'recieve')
                         .then(rs => {
                             this.$refs.text.nativeView.isEnabled = true
                             this.textMessage = this.photo = ""

@@ -17,7 +17,6 @@ const moduleMessenger = {
     actions: {
         getMessages: ({ commit, getters }) => {
             DB.messenger(getters.user.username)
-            // DB.messenger('max')
                 .getMessages()
                 .then(rs => {
                     let messages = rs.result.messages
@@ -28,7 +27,7 @@ const moduleMessenger = {
                         msg.image = helper.posts.formatUrlImage(msg.image)
                         msg.timeSend = helper.posts.formatDate(msg.timeSend)
                     });
-                    commit("setMessages", messages)
+                    commit("setMessages", messages) 
                     
                     let listChat = []
                     // messages.reverse()

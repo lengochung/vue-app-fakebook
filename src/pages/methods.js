@@ -11,12 +11,15 @@ const methods = {
         // Lấy dữ liệu từ server mysql
         DB.load("users").getAll().then(rs => {
             this.alert = { user: "", password: ""};
+            // 
+            let username = this.inputText.user.toLowerCase()
+            let password = this.inputText.password.toLowerCase()
             // Xác minh user
-            if(rs.result.some(user => user.username === this.inputText.user)) {
+            if(rs.result.some(user => user.username === username)) {
                 // Xác minh mật khẩu
-                if(rs.result.some(user => user.username === this.inputText.user && user.password === this.inputText.password)) {
+                if(rs.result.some(user => user.username === username && user.password === password)) {
                     // Đăng nhập thành công
-                    let newUser = rs.result.find(user => user.username === this.inputText.user && user.password === this.inputText.password)
+                    let newUser = rs.result.find(user => user.username === username && user.password === password)
 
                     this.setLogin( newUser ) 
                     // 

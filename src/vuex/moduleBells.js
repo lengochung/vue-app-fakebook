@@ -12,7 +12,7 @@ const moduleBells = {
     },
     actions: {
         getBells: ({ commit, getters }) => {
-            DB.load("bells").getAll("uid", getters.user.uid)
+            DB.load("bells").getWhere("uid", getters.user.uid)
                 .then(rs => commit("setBells", rs.result))
                 .catch(err => commit("setBells", getters.bells))
         }
