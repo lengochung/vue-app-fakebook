@@ -4,7 +4,7 @@
      background-size: 100% 100%;
    }
    .busy {
-     color: black;
+     color: #4BD5DC;
    }
    .alert {
      color: rgb(141, 3, 3); text-align: right;
@@ -64,29 +64,31 @@
 
           <StackLayout class="container" :hidden="hidden">
             <FlexboxLayout alignItems="center" class="border-bottom">
-              <Image src="~/assets/images/hung.png" width="16" height="14" class="icon-margin" />
+              <Image src="~/assets/images/user-icon.png" width="20" height="20" class="icon-margin" />
               <TextField  hint="Username" class="form-input" 
-                v-model="inputText.user"
+                v-model="username"
               />
               <Label :text="alert.user" v-if="alert.user.length > 0" class="alert" textWrap="true" />
             </FlexboxLayout>
 
             <FlexboxLayout alignItems="center" class="border-bottom">
-              <Image src="~/assets/images/bao.png" width="16" height="14" class="icon-margin" />
+              <Image src="~/assets/images/password-icon.png" width="20" height="20" class="icon-margin" />
               <TextField  hint="Password" secure="true" class="form-input" 
-                v-model="inputText.password" returnKeyType="go"
+                v-model="password" returnKeyType="go"
               />
               <Label :text="alert.password" v-if="alert.password.length > 0" class="alert" textWrap="true" />
             </FlexboxLayout>
 
             <Button text="Login"  class="my-button"
               @tap="loginHandle"
-              :hidden="inputText.user.length > 0 && inputText.password.length > 0 ? false : true" 
+              
             />
 
             <FlexboxLayout alignItems="center" justifyContent="space-between" class="auth-buttons">
-              <Label horizontalAlignment="left" text="Create Account" />
-              <Label horizontalAlignment="right" text="Forgot Password" />
+              <Label 
+                @tap="gotoRegister"
+                horizontalAlignment="left" text="Create Account" />
+              <!-- <Label horizontalAlignment="right" text="Forgot Password" /> -->
             </FlexboxLayout>
           </StackLayout>
           <ActivityIndicator ref="load" width="100" height="100" class="busy" :busy="hidden" />
@@ -104,23 +106,29 @@
 <script>
 
 import { mapMutations } from 'vuex'
-import nof from '../notifications'
 
 import methods from "./methods"
 
+import Register from "./register.vue"
+
 export default {
+    props: ['username', 'password'],
     data: () => ({
       hidden: false,
-      inputText: {
-        user: "max", password: "lengochung"
-      },
       alert: {
         user: "", password: ""
       },
     }),
     methods: {
       ...mapMutations(["setLogin"]),
-      loginHandle: methods.loginHandle 
+      loginHandle: methods.loginHandle,
+      gotoRegister() {
+        this.$navigateTo(Register, {
+                transition: {
+                    name: "slideBottom", duration: 300, curve: "easeIn"
+                }
+            })
+      }
     },
     mounted() {
        

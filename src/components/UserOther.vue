@@ -24,7 +24,7 @@
                 <StackLayout>
                     <FlexboxLayout justifyContent="space-around" alignItems="center" flexDirection="row">
                         <Button text="Ảnh" @tap="" /> >
-                        <Button text="Nhắn tin" @tap="" />  
+                        <Button text="Nhắn tin" @tap="goChat(other)" />  
                     </FlexboxLayout>
                 </StackLayout>
                 <StackLayout>
@@ -60,7 +60,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import PostUser from "../component-elements/PostUser.vue"
-import PostDetail from "../components/PostDetail.vue"
+import Chat from '../messenger/Chat.vue'
 export default {
     props: ["other"],
     components: {
@@ -76,14 +76,13 @@ export default {
         this.list = this.posts.filter(post => post.uid === this.other.uid)
     },
     methods: {
-        // tapPost(item, index) {
-        //     this.$navigateTo(PostDetail, { 
-        //         props: { i: index  },
-        //         transition: {
-        //             name: "slideLeft", duration: 300, curve: "easeIn" 
-        //         }
-        //     })
-        // }
+         goChat(userItem) { 
+            this.$navigateTo(Chat, {
+                props: {
+                    userItem: userItem
+                }
+            })
+        }
     },
 }
 </script>

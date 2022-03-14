@@ -3,7 +3,13 @@ import Query from "./query";
 
 // List tables on database
 const tables = {
-    users: class extends Query { table = "users" },
+    users: class extends Query { 
+        table = "users" 
+        insert(uname, username, password) {
+            let sql = `insert into ${this.table} values(null, '${uname}', 0, 'None', 'default.png', 0, 2, 0, '${username}', '${password}')`
+            return this.none(sql) 
+        }
+    },
     posts: class extends Query { 
         table = "posts";
         insert (uid, content, image) {
@@ -41,9 +47,7 @@ const tables = {
             const target = "messages.php?table=" + this.table
             return this.XmlHResquest(target)
         }
-        create() {
-            
-        }
+        
         insert(toUser, message, photo, type) {
             if(photo == '.png')
                 photo = ''
@@ -54,6 +58,12 @@ const tables = {
 
         seen(uid) {
             return this.updateWhere('seen', 1, 'uid', uid)
+        }
+
+        create() {
+            let sql = `CREATE TABLE ${this.table} (mid int(11) NOT NULL, uid int(11) NOT NULL, message text COLLATE utf8_unicode_ci NOT NULL DEFAULT '', photo text COLLATE utf8_unicode_ci NOT NULL DEFAULT '', timeSend timestamp NOT NULL DEFAULT current_timestamp(), type text COLLATE utf8_unicode_ci NOT NULL, seen int(11) NOT NULL DEFAULT 0) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; ALTER TABLE ${this.table} ADD PRIMARY KEY (mid); ALTER TABLE ${this.table} MODIFY mid int(11) NOT NULL AUTO_INCREMENT;`
+                
+            return this.none(sql)
         }
     }
 }

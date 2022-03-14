@@ -11,7 +11,7 @@
         </ScrollView>
         <GridLayout  columns="*, auto, *" rows="*, *" top="0" left="0" class="infoImagePost">
              
-                <Image :src="post.image"
+                <Image :src="post.image" with="40"
                     stretch="aspectFill" class="avatarUser back"
                     row="0" col="0" />
                 <Label :text="post.uname" textWrap="true" class="nameUser"

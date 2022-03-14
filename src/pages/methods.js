@@ -12,8 +12,8 @@ const methods = {
         DB.load("users").getAll().then(rs => {
             this.alert = { user: "", password: ""};
             // 
-            let username = this.inputText.user.toLowerCase()
-            let password = this.inputText.password.toLowerCase()
+            let username = this.username.toLowerCase()
+            let password = this.password.toLowerCase()
             // Xác minh user
             if(rs.result.some(user => user.username === username)) {
                 // Xác minh mật khẩu
